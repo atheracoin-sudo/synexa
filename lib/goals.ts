@@ -478,12 +478,16 @@ export class GoalManager {
     
     // Update streaks
     this.updateStreak(userId, 'general', true)
-    this.updateStreak(userId, activityType, true)
+    // Only update specific streak for valid types
+    if (activityType !== 'agent') {
+      this.updateStreak(userId, activityType, true)
+    }
   }
 }
 
 // Export singleton instance
 export const goalManager = GoalManager.getInstance()
+
 
 
 

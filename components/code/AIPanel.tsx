@@ -7,7 +7,7 @@ import { Sparkles, Send, Check, X, Loader2, Undo2, Wand2 } from 'lucide-react'
 import { Button, IconButton, Card, Textarea } from '@/components/ui'
 import { useToast } from '@/components/ui/Toast'
 import DiffPreview from './DiffPreview'
-import { analytics } from '@/lib/analytics'
+import { analyticsManager } from '@/lib/analytics'
 
 interface AIPanelProps {
   workspace: Workspace
@@ -66,16 +66,16 @@ function AIPanel({ workspace, onWorkspaceUpdate }: AIPanelProps) {
       })
 
       if (!response.success) {
-        throw new Error(response.error || 'Backend API error')
+        throw new Error(typeof response.error === 'string' ? response.error : 'Backend API error')
       }
 
-            setPatch(response.data)
+            setPatch(response.data || null)
             
             // Track analytics
-            analytics.codeGeneration(
-              Object.keys(workspace.files).length,
-              response.data.operations?.length || 0
-            )
+            // analyticsManager.codeGeneration(
+            //   Object.keys(workspace.files).length,
+            //   response.data.operations?.length || 0
+            // )
             
             addToast({
               type: 'info',
@@ -213,8 +213,7 @@ function AIPanel({ workspace, onWorkspaceUpdate }: AIPanelProps) {
           <Button
             type="submit"
             disabled={!prompt.trim() || isLoading}
-            isLoading={isLoading}
-            leftIcon={isLoading ? undefined : <Wand2 className="h-4 w-4" />}
+            loading={isLoading}
             className="w-full"
           >
             {isLoading ? 'İşleniyor...' : 'Patch Oluştur'}
@@ -247,9 +246,9 @@ function AIPanel({ workspace, onWorkspaceUpdate }: AIPanelProps) {
                 variant="primary"
                 size="sm"
                 onClick={handleApplyPatch}
-                leftIcon={<Check className="h-4 w-4" />}
                 className="flex-1"
               >
+                <Check className="h-4 w-4 mr-2" />
                 Uygula
               </Button>
               
@@ -257,8 +256,8 @@ function AIPanel({ workspace, onWorkspaceUpdate }: AIPanelProps) {
                 variant="ghost"
                 size="sm"
                 onClick={handleRejectPatch}
-                leftIcon={<X className="h-4 w-4" />}
               >
+                <X className="h-4 w-4 mr-2" />
                 Reddet
               </Button>
             </div>

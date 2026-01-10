@@ -12,7 +12,7 @@ export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ className, type, leftIcon, rightIcon, error, ...props }, ref) => {
     return (
-      <div className="relative w-full">
+      <div className="relative">
         {leftIcon && (
           <div className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
             {leftIcon}
@@ -21,14 +21,10 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         <input
           type={type}
           className={cn(
-            'flex h-10 w-full rounded-lg border border-border bg-background px-3 py-2 text-sm',
-            'placeholder:text-muted-foreground',
-            'focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary',
-            'disabled:cursor-not-allowed disabled:opacity-50',
-            'transition-all duration-200',
+            'flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50',
             leftIcon && 'pl-10',
             rightIcon && 'pr-10',
-            error && 'border-destructive focus:ring-destructive/50 focus:border-destructive',
+            error && 'border-destructive focus-visible:ring-destructive',
             className
           )}
           ref={ref}
@@ -40,7 +36,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           </div>
         )}
         {error && (
-          <p className="mt-1 text-xs text-destructive">{error}</p>
+          <p className="mt-1 text-sm text-destructive">{error}</p>
         )}
       </div>
     )
@@ -50,11 +46,3 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
 Input.displayName = 'Input'
 
 export { Input }
-
-
-
-
-
-
-
-

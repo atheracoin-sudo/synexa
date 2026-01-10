@@ -28,13 +28,13 @@ export function MemorySuggestion({
       onAccept(suggestion.id)
       addToast({
         type: 'success',
-        message: 'Tercih kaydedildi! 💾',
+        title: 'Tercih kaydedildi! 💾',
         duration: 2000,
       })
     } catch (error) {
       addToast({
         type: 'error',
-        message: 'Tercih kaydedilemedi',
+        title: 'Tercih kaydedilemedi',
       })
     }
     setIsProcessing(false)
@@ -100,6 +100,7 @@ export function MemorySuggestion({
     </div>
   )
 }
+
 
 
 

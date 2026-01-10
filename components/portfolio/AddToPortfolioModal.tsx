@@ -102,12 +102,12 @@ export function AddToPortfolioModal({
   }
 
   const getProjectTypeIcon = (type: ProjectType) => {
-    const icons = {
+    const icons: Record<string, React.ReactElement> = {
       code: <Code className="w-5 h-5" />,
       image: <ImageIcon className="w-5 h-5" />,
       chat: <MessageCircle className="w-5 h-5" />
     }
-    return icons[type] || <Code className="w-5 h-5" />
+    return icons[type as string] || <Code className="w-5 h-5" />
   }
 
   const getVisibilityInfo = (visibility: ProjectVisibility) => {
@@ -406,6 +406,7 @@ export function AddToPortfolioModal({
     </>
   )
 }
+
 
 
 

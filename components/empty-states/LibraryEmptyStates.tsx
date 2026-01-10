@@ -179,7 +179,7 @@ export function QuickActionEmptyState({
             return (
               <Link key={index} href={action.href} className="flex-1">
                 <Button 
-                  variant={action.variant || 'default'}
+                  variant={action.variant === 'default' ? 'primary' : action.variant || 'primary'}
                   className="w-full"
                 >
                   {buttonContent}
@@ -191,7 +191,7 @@ export function QuickActionEmptyState({
           return (
             <Button
               key={index}
-              variant={action.variant || 'default'}
+              variant={action.variant === 'default' ? 'primary' : action.variant || 'primary'}
               onClick={action.onClick}
               className="flex-1"
             >
@@ -203,6 +203,7 @@ export function QuickActionEmptyState({
     </div>
   )
 }
+
 
 
 

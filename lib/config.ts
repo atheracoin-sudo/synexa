@@ -58,6 +58,14 @@ export const config = {
       agents: 100,
       projects: 200,
       storage: '100GB'
+    },
+    enterprise: {
+      chatMessages: -1, // unlimited
+      codeGenerations: -1, // unlimited
+      imageGenerations: -1, // unlimited
+      agents: -1, // unlimited
+      projects: -1, // unlimited
+      storage: 'unlimited'
     }
   },
   

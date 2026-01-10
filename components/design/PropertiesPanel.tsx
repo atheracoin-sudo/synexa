@@ -135,7 +135,7 @@ function PropertiesPanel({
                 <Palette className="h-4 w-4 text-muted-foreground" />
                 <h4 className="text-sm font-medium text-foreground">Seçili Öğe</h4>
               </div>
-              <Badge variant="primary" size="sm">
+              <Badge variant="default">
                 {selectedNode.type === 'text' ? 'Metin' : 
                  selectedNode.type === 'rect' ? 'Dikdörtgen' : 'Daire'}
               </Badge>

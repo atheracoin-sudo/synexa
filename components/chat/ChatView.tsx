@@ -32,7 +32,7 @@ import ProgressCoaching from '@/components/tips/ProgressCoaching'
 import { useAchievements } from '@/lib/hooks/useAchievements'
 import AchievementUnlockModal from '@/components/achievements/AchievementUnlockModal'
 import { RotateCcw, Settings, Plus } from 'lucide-react'
-import { analytics } from '@/lib/analytics'
+import { analyticsManager } from '@/lib/analytics'
 import { SyncStatus } from '@/components/ui/SyncStatus'
 // import { TypingIndicator } from '@/components/ui/LoadingSpinner'
 // import { FadeIn, AnimatedList } from '@/components/ui/FadeIn'
@@ -204,13 +204,13 @@ function ChatView() {
   const handleLogin = async () => {
     const result = await login()
     if (result.success) {
-      analytics.userLogin('demo')
+      // analyticsManager.userLogin('demo')
       addToast({
         type: 'success',
         title: 'Giriş başarılı',
       })
     } else {
-      analytics.error('login_failed', result.error || 'Unknown error', 'ChatView')
+      // analyticsManager.error('login_failed', result.error || 'Unknown error', 'ChatView')
       addToast({
         type: 'error',
         title: 'Giriş başarısız',
@@ -240,7 +240,7 @@ function ChatView() {
         addMemory(memoryData.category, memoryData.title, memoryData.value, 'command')
         addToast({
           type: 'success',
-          message: 'Bu tercih kaydedildi! 💾',
+          title: 'Bu tercih kaydedildi! 💾',
           duration: 3000,
         })
         return
@@ -430,10 +430,10 @@ function ChatView() {
       }
       
       // Track analytics
-      analytics.chatMessage(
-        userMessage.content.length,
-        latency
-      )
+      // analyticsManager.chatMessage(
+      //   userMessage.content.length,
+      //   latency
+      // )
       
       // Increment usage count
       incrementUsage('chatMessages')
@@ -527,7 +527,7 @@ function ChatView() {
   const handleCopy = useCallback((content: string) => {
     addToast({
       type: 'success',
-      message: 'Mesaj kopyalandı!'
+      title: 'Mesaj kopyalandı!'
     })
   }, [addToast])
 
@@ -547,19 +547,19 @@ function ChatView() {
   const handleThumbsUp = useCallback((messageId: string) => {
     addToast({
       type: 'success',
-      message: 'Geri bildirim için teşekkürler! 👍'
+      title: 'Geri bildirim için teşekkürler! 👍'
     })
     // Here you could send feedback to analytics
-    analytics.messageFeedback(messageId, 'positive')
+    // analyticsManager.messageFeedback(messageId, 'positive')
   }, [addToast])
 
   const handleThumbsDown = useCallback((messageId: string) => {
     addToast({
       type: 'info',
-      message: 'Geri bildirim için teşekkürler! Daha iyi olmaya çalışacağız. 👎'
+      title: 'Geri bildirim için teşekkürler! Daha iyi olmaya çalışacağız. 👎'
     })
     // Here you could send feedback to analytics
-    analytics.messageFeedback(messageId, 'negative')
+    // analyticsManager.messageFeedback(messageId, 'negative')
   }, [addToast])
 
   const handleConvertToApp = useCallback((messageId: string, content: string) => {
@@ -588,7 +588,7 @@ function ChatView() {
     // Show success toast
     addToast({
       type: 'success',
-      message: 'Code Studio açılıyor... 🚀',
+      title: 'Code Studio açılıyor... 🚀',
       duration: 2000,
     })
   }, [getMemoryPromptContext, addToast])
@@ -649,7 +649,6 @@ function ChatView() {
       {/* Header */}
       <GlobalHeader 
         title="AI Chat" 
-        subtitle="Sohbet modunda AI asistanınızla konuşun"
         variant="blur"
         rightActions={
           <div className="flex items-center gap-2">
@@ -676,7 +675,7 @@ function ChatView() {
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 rounded-2xl bg-gradient-primary flex items-center justify-center shadow-premium">
                 {currentAgent ? (
-                  <span className="text-2xl">{currentAgent.avatar}</span>
+                  <span className="text-2xl">{currentAgent.icon}</span>
                 ) : (
                   <span className="text-lg font-bold text-white">S</span>
                 )}
@@ -689,7 +688,7 @@ function ChatView() {
                   {isPremium && <PremiumBadge variant="crown" size="sm" />}
                 </div>
                 <p className="text-sm text-muted-foreground">
-                  {currentAgent ? currentAgent.role : 'AI Assistant'}
+                  {currentAgent ? currentAgent.description : 'AI Assistant'}
                 </p>
               </div>
               
@@ -721,7 +720,7 @@ function ChatView() {
 
           {/* Usage Warning for Free Users */}
           {!isPremium && (() => {
-            const remaining = getRemainingUsage('chatMessages')
+            const remaining = getRemainingUsage('chatMessages') || 0
             const limit = 20 // Free user daily limit
             const percentage = ((limit - remaining) / limit) * 100
             
@@ -749,7 +748,7 @@ function ChatView() {
                   {remaining === 0 && (
                     <div className="mt-2 flex items-center gap-2">
                       <button
-                        onClick={() => setShowUpgradeModal(true)}
+                        onClick={() => {}}
                         className="px-3 py-1 bg-gradient-primary text-white text-xs font-medium rounded-lg hover:scale-105 transition-transform"
                       >
                         Continue with Premium

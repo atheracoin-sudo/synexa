@@ -16,8 +16,8 @@ import {
   Plus,
   ArchiveRestore
 } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/Button'
+import { Input } from '@/components/ui/Input'
 import { SimpleDropdown, SimpleDropdownItem, SimpleDropdownSeparator } from '@/components/ui/simple-dropdown'
 import {
   AlertDialog,
@@ -179,7 +179,7 @@ export function ConversationList({ className }: ConversationListProps) {
         {/* Filter */}
         <div className="flex gap-2">
           <Button
-            variant={filter === 'all' ? 'default' : 'ghost'}
+            variant={filter === 'all' ? 'primary' : 'ghost'}
             size="sm"
             onClick={() => setFilter('all')}
             className="flex-1"
@@ -187,7 +187,7 @@ export function ConversationList({ className }: ConversationListProps) {
             Tümü
           </Button>
           <Button
-            variant={filter === 'pinned' ? 'default' : 'ghost'}
+            variant={filter === 'pinned' ? 'primary' : 'ghost'}
             size="sm"
             onClick={() => setFilter('pinned')}
             className="flex-1"
@@ -196,7 +196,7 @@ export function ConversationList({ className }: ConversationListProps) {
             Sabitli
           </Button>
           <Button
-            variant={filter === 'archived' ? 'default' : 'ghost'}
+            variant={filter === 'archived' ? 'primary' : 'ghost'}
             size="sm"
             onClick={() => setFilter('archived')}
             className="flex-1"
@@ -270,7 +270,7 @@ export function ConversationList({ className }: ConversationListProps) {
                   <div className="flex items-center gap-2 px-2 py-1 mb-2">
                     <MessageSquare className="h-4 w-4 text-muted-foreground" />
                     <span className="text-sm font-medium text-muted-foreground">
-                      {filter === 'archived' ? 'Arşivlenmiş' : 'Diğer Sohbetler'}
+                      {(filter as any) === 'archived' ? 'Arşivlenmiş' : 'Diğer Sohbetler'}
                     </span>
                   </div>
                 )}
@@ -422,24 +422,21 @@ function ConversationItem({
             }
             className="w-48"
           >
-            <SimpleDropdownItem onClick={(e) => {
-              e?.stopPropagation()
+            <SimpleDropdownItem onClick={() => {
               onStartEdit()
             }}>
               <Edit3 className="h-4 w-4 mr-2" />
               Yeniden Adlandır
             </SimpleDropdownItem>
             
-            <SimpleDropdownItem onClick={(e) => {
-              e?.stopPropagation()
+            <SimpleDropdownItem onClick={() => {
               onPin()
             }}>
               <Pin className="h-4 w-4 mr-2" />
               {conversation.isPinned ? 'Sabitlemeyi Kaldır' : 'Sabitle'}
             </SimpleDropdownItem>
             
-            <SimpleDropdownItem onClick={(e) => {
-              e?.stopPropagation()
+            <SimpleDropdownItem onClick={() => {
               onArchive()
             }}>
               {conversation.isArchived ? (
@@ -458,8 +455,7 @@ function ConversationItem({
             <SimpleDropdownSeparator />
             
             <SimpleDropdownItem 
-              onClick={(e) => {
-                e?.stopPropagation()
+              onClick={() => {
                 onDelete()
               }}
               variant="destructive"

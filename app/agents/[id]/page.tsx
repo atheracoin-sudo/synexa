@@ -80,7 +80,7 @@ export default function AgentDetailPage() {
   }
 
   const getToolIcon = (tool: string) => {
-    const icons = {
+    const icons: Record<string, React.ReactElement> = {
       chat: <MessageCircle className="w-4 h-4" />,
       code: <Code className="w-4 h-4" />,
       image: <ImageIcon className="w-4 h-4" />,

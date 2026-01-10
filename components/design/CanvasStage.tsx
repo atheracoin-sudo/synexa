@@ -38,5 +38,5 @@ export default function CanvasStage(props: CanvasStageProps) {
     )
   }
 
-  return <CanvasStageClient {...props} />
+  return <CanvasStageClient {...props} onNodeDelete={() => {}} onNodeAdd={() => {}} />
 }

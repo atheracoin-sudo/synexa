@@ -7,7 +7,7 @@ import { BottomTabBar } from '@/components/ui/BottomTabBar'
 import { ChatMessage } from '@/components/chat/ChatMessage'
 import { LoadingSpinner, EmptyState } from '@/components/ui/LoadingStates'
 import { cn } from '@/lib/utils'
-import { useToast } from '@/components/ui/Toast'
+import { toast } from '@/components/ui/use-toast'
 import { ChatAPI, ChatConversation, ChatMessage as ChatMessageType, streamChatResponse } from '@/lib/api/chat'
 import { useApp } from '@/lib/context/AppContext'
 import { LimitReachedModal } from '@/components/usage/LimitReachedModal'
@@ -16,7 +16,7 @@ import { getUserPlanLimits } from '@/lib/config'
 
 export default function ChatPage() {
   const { state, actions } = useApp()
-  const { toast } = useToast()
+  // Use toast function directly
   
   // Chat state
   const [conversations, setConversations] = useState<ChatConversation[]>([])

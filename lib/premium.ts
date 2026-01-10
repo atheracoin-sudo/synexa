@@ -22,6 +22,16 @@ export const PLAN_LIMITS: Record<PlanType, PlanLimits> = {
     multiDevicePreview: true,
     aiDesignAssistant: true,
   },
+  team: {
+    chatMessages: null, // unlimited
+    codeProjects: null, // unlimited
+    imageExports: null, // unlimited
+    versionHistory: true,
+    brandKit: true,
+    hdExport: true,
+    multiDevicePreview: true,
+    aiDesignAssistant: true,
+  },
 }
 
 // Default usage stats
@@ -178,7 +188,7 @@ export class PremiumManager {
       feature,
       isLocked: true,
       reason: 'Premium özellik',
-      upgradeMessage: upgradeMessages[feature] || 'Premium ile açılır',
+      upgradeMessage: (upgradeMessages as any)[feature] || 'Premium ile açılır',
     }
   }
 
@@ -244,6 +254,7 @@ export class PremiumManager {
 
 // Singleton instance
 export const premiumManager = PremiumManager.getInstance()
+
 
 
 

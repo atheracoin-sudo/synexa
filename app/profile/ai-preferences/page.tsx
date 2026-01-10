@@ -42,7 +42,7 @@ export default function AIPreferencesPage() {
     toggleMemory(memoryId)
     addToast({
       type: 'success',
-      message: 'Tercih güncellendi',
+      title: 'Tercih güncellendi',
       duration: 2000,
     })
   }
@@ -52,7 +52,7 @@ export default function AIPreferencesPage() {
       deleteMemory(memoryId)
       addToast({
         type: 'success',
-        message: 'Tercih silindi',
+        title: 'Tercih silindi',
         duration: 2000,
       })
     }
@@ -62,7 +62,7 @@ export default function AIPreferencesPage() {
     if (!newMemory.title.trim() || !newMemory.value.trim()) {
       addToast({
         type: 'error',
-        message: 'Lütfen tüm alanları doldurun',
+        title: 'Lütfen tüm alanları doldurun',
       })
       return
     }
@@ -71,7 +71,7 @@ export default function AIPreferencesPage() {
     if (!isPremium && memoryContext.totalItems >= 3) {
       addToast({
         type: 'error',
-        message: 'Free kullanıcılar en fazla 3 tercih kaydedebilir. Premium ile sınırsız tercih ekleyin.',
+        title: 'Free kullanıcılar en fazla 3 tercih kaydedebilir. Premium ile sınırsız tercih ekleyin.',
         duration: 4000,
       })
       return
@@ -82,7 +82,7 @@ export default function AIPreferencesPage() {
     setShowAddForm(false)
     addToast({
       type: 'success',
-      message: 'Yeni tercih eklendi! 💾',
+      title: 'Yeni tercih eklendi! 💾',
       duration: 2000,
     })
   }
@@ -101,11 +101,8 @@ export default function AIPreferencesPage() {
       <GlobalHeader 
         title="AI Preferences" 
         variant="blur"
-        leftButton={{
-          icon: ArrowLeft,
-          onClick: () => router.back(),
-          'aria-label': 'Go back'
-        }}
+        showBackButton={true}
+        onBackPress={() => router.back()}
       />
 
       {/* Main Content */}
@@ -368,6 +365,7 @@ export default function AIPreferencesPage() {
     </div>
   )
 }
+
 
 
 

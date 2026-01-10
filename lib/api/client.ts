@@ -237,7 +237,6 @@ export class SynexaApiClient {
             error: {
               code: errorCode,
               message: getUserFriendlyErrorMessage(errorCode, originalMessage),
-              originalMessage,
               status: response.status
             }
           }
@@ -252,7 +251,6 @@ export class SynexaApiClient {
             error: {
               code: errorCode,
               message: getUserFriendlyErrorMessage(errorCode, originalMessage),
-              originalMessage,
               status: response.status
             }
           }
@@ -281,7 +279,6 @@ export class SynexaApiClient {
         error: {
           code: 'NETWORK_ERROR',
           message: getUserFriendlyErrorMessage('NETWORK_ERROR', originalMessage),
-          originalMessage,
           status: 0
         }
       }

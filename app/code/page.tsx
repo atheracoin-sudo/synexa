@@ -254,8 +254,7 @@ ${prompt.toLowerCase().replace(/\s+/g, '')}();`
             {!prompt.trim() && !generatedCode && (
               <div className="mb-8">
                 <CodeEmptyState 
-                  onPromptSelect={setPrompt}
-                  onboardingData={onboardingData}
+                  onCreateFromPrompt={() => {}}
                 />
               </div>
             )}
@@ -294,8 +293,7 @@ ${prompt.toLowerCase().replace(/\s+/g, '')}();`
             {!prompt.trim() && !generatedCode && (
               <div className="mb-8">
                 <CodeEmptyState 
-                  onPromptSelect={setPrompt}
-                  onboardingData={onboardingData}
+                  onCreateFromPrompt={() => {}}
                 />
               </div>
             )}
@@ -407,13 +405,7 @@ ${prompt.toLowerCase().replace(/\s+/g, '')}();`
           </h2>
           
           <FeatureLock
-            feature="versionHistory"
-            showPreview={true}
-            onUpgradeClick={() => setShowUpgradeModal(true)}
-            onPreviewClick={() => {
-              // Show preview mode
-              alert('Preview: Version history allows you to track and restore previous versions of your projects.')
-            }}
+            featureId="versionHistory"
           >
             {/* Mock version history content */}
             <div className="space-y-3">

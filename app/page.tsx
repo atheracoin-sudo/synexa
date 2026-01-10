@@ -28,6 +28,8 @@ import { CompactGoalCard } from '@/components/goals/GoalProgressCard'
 import { GoalCreationModal } from '@/components/goals/GoalCreationModal'
 import { goalManager, Goal } from '@/lib/goals'
 import { usePremium } from '@/lib/hooks/usePremium'
+import { useUsage, useUserPlan } from '@/lib/context/AppContext'
+import { getUserPlanLimits, shouldShowUpgradePrompt } from '@/lib/config'
 import { usePageTips } from '@/lib/hooks/useTips'
 import InlineTip, { CompactTip } from '@/components/tips/InlineTip'
 import AICoachingPanel from '@/components/tips/AICoachingPanel'
@@ -293,7 +295,7 @@ export default function HomePage() {
             {personalizedFeatures.map((feature) => {
               const Icon = feature.icon
               
-              return feature.disabled ? (
+              return false ? (
                 <div
                   key={feature.id}
                   className="group block opacity-60 cursor-not-allowed"

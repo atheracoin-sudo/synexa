@@ -1,4 +1,4 @@
-import { Agent } from './types'
+import { AIAgent } from './types'
 
 export interface UsageData {
   chatMessages: number

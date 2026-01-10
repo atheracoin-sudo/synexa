@@ -347,10 +347,10 @@ function SimpleCanvas({
       {/* Toolbar */}
       <div className="flex items-center justify-between px-4 py-2 border-b border-border bg-card">
         <div className="flex items-center gap-2">
-          <Badge variant="outline" size="sm">
+          <Badge variant="outline" >
             {scene.width} × {scene.height}px
           </Badge>
-          <Badge variant="default" size="sm">
+          <Badge variant="default" >
             {scene.nodes.length} öğe
           </Badge>
         </div>
@@ -361,7 +361,6 @@ function SimpleCanvas({
             <IconButton
               aria-label="Izgara göster/gizle"
               variant={showGrid ? 'secondary' : 'ghost'}
-              size="sm"
               onClick={() => setShowGrid(!showGrid)}
             >
               <Grid3X3 className="h-4 w-4" />
@@ -375,7 +374,6 @@ function SimpleCanvas({
             <IconButton
               aria-label="Uzaklaştır"
               variant="ghost"
-              size="sm"
               onClick={handleZoomOut}
               disabled={zoom === ZOOM_LEVELS[0]}
             >
@@ -394,7 +392,6 @@ function SimpleCanvas({
             <IconButton
               aria-label="Yakınlaştır"
               variant="ghost"
-              size="sm"
               onClick={handleZoomIn}
               disabled={zoom === ZOOM_LEVELS[ZOOM_LEVELS.length - 1]}
             >
@@ -406,7 +403,6 @@ function SimpleCanvas({
             <IconButton
               aria-label="Sığdır"
               variant="ghost"
-              size="sm"
               onClick={handleResetZoom}
             >
               <Maximize2 className="h-4 w-4" />
@@ -477,7 +473,7 @@ function SimpleCanvas({
                     {scene.width * 2} × {scene.height * 2}px
                   </div>
                 </div>
-                <Badge variant="primary">Retina</Badge>
+                <Badge variant="default">Retina</Badge>
               </button>
             </div>
 

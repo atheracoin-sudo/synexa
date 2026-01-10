@@ -567,7 +567,7 @@ class MarketplaceManager {
     }
 
     if (filters.minRating) {
-      filtered = filtered.filter(t => t.rating >= filters.minRating)
+      filtered = filtered.filter(t => t.rating >= (filters.minRating ?? 0))
     }
 
     return filtered.sort((a, b) => b.usageCount - a.usageCount)
@@ -584,7 +584,7 @@ class MarketplaceManager {
       ? Array.from(this.templates.values()).filter(t => t.type === type)
       : Array.from(this.templates.values())
     
-    const categories = [...new Set(templates.map(t => t.category))]
+    const categories = Array.from(new Set(templates.map(t => t.category)))
     return categories.sort()
   }
 
@@ -657,6 +657,7 @@ class MarketplaceManager {
 
 // Singleton instance
 export const marketplaceManager = new MarketplaceManager()
+
 
 
 

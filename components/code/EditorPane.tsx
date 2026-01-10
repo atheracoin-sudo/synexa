@@ -159,12 +159,12 @@ function EditorPane({ workspace, onContentChange }: EditorPaneProps) {
         {/* Save status */}
         <div className="flex items-center gap-2">
           {isSaved ? (
-            <Badge variant="success" size="sm">
+            <Badge variant="success">
               <Check className="h-3 w-3 mr-1" />
               Kaydedildi
             </Badge>
           ) : (
-            <Badge variant="warning" size="sm">
+            <Badge variant="warning">
               <Loader2 className="h-3 w-3 mr-1 animate-spin" />
               Kaydediliyor...
             </Badge>

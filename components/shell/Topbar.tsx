@@ -248,8 +248,8 @@ export default function Topbar({ onMenuClick }: TopbarProps) {
                   variant={action.variant}
                   size="sm"
                   onClick={() => handleAction(action.action)}
-                  leftIcon={<Icon className="h-4 w-4" />}
                 >
+                  <Icon className="h-4 w-4 mr-2" />
                   <span className="hidden sm:inline">{action.label}</span>
                 </Button>
               )

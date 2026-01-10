@@ -233,7 +233,10 @@ export default function MembersPage() {
                                   disabled={member.role === role}
                                   className="w-full flex items-center gap-2 px-2 py-2 text-left text-gray-300 hover:bg-gray-700 rounded disabled:opacity-50 disabled:cursor-not-allowed"
                                 >
-                                  {React.createElement(getRoleIcon(role), { className: "w-4 h-4" })}
+                                  {(() => {
+                                    const RoleIcon = getRoleIcon(role)
+                                    return <RoleIcon className="w-4 h-4" />
+                                  })()}
                                   <span className="capitalize">{role}</span>
                                   {member.role === role && <Check className="w-4 h-4 ml-auto text-blue-400" />}
                                 </button>
@@ -394,6 +397,7 @@ function InviteMemberModal({
     </div>
   )
 }
+
 
 
 

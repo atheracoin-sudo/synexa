@@ -235,7 +235,7 @@ export function ShareModal({ isOpen, onClose, type, id }: ShareModalProps) {
                 </button>
 
                 {/* Native Share (if available) */}
-                {navigator.share && (
+                {typeof navigator !== 'undefined' && 'share' in navigator && (
                   <button
                     onClick={handleNativeShare}
                     className="flex flex-col items-center gap-2 p-4 bg-blue-600/10 hover:bg-blue-600/20 border border-blue-600/30 rounded-xl transition-colors"
@@ -310,6 +310,7 @@ export function ShareModal({ isOpen, onClose, type, id }: ShareModalProps) {
     </>
   )
 }
+
 
 
 

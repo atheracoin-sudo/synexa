@@ -2,8 +2,8 @@
 
 import React, { useState } from 'react'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog'
-import { Button } from '@/components/ui/button'
-import { Checkbox } from '@/components/ui/checkbox'
+import { Button } from '@/components/ui/Button'
+// import { input } from '@/components/ui/checkbox'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { MessageSquare, Code, AlertTriangle, FileText, Brain } from 'lucide-react'
@@ -78,10 +78,11 @@ export function CodeToChatModal({
             
             {selectedCode && (
               <div className="flex items-start space-x-3 p-3 border rounded-lg">
-                <Checkbox 
+                <input 
+                  type="checkbox"
                   id="selected-code" 
                   checked={includeSelectedCode} 
-                  onCheckedChange={(checked) => setIncludeSelectedCode(!!checked)} 
+                  onChange={(e) => setIncludeSelectedCode(e.target.checked)} 
                 />
                 <div className="flex-1">
                   <Label htmlFor="selected-code" className="text-base font-medium flex items-center gap-2">
@@ -97,10 +98,11 @@ export function CodeToChatModal({
 
             {consoleErrors.length > 0 && (
               <div className="flex items-start space-x-3 p-3 border rounded-lg">
-                <Checkbox 
+                <input 
+                  type="checkbox"
                   id="console-errors" 
                   checked={includeErrors} 
-                  onCheckedChange={(checked) => setIncludeErrors(!!checked)} 
+                  onChange={(e) => setIncludeErrors(e.target.checked)} 
                 />
                 <div className="flex-1">
                   <Label htmlFor="console-errors" className="text-base font-medium flex items-center gap-2">
@@ -116,10 +118,11 @@ export function CodeToChatModal({
 
             {projectSummary && (
               <div className="flex items-start space-x-3 p-3 border rounded-lg">
-                <Checkbox 
+                <input 
+                  type="checkbox"
                   id="project-summary" 
                   checked={includeProjectSummary} 
-                  onCheckedChange={(checked) => setIncludeProjectSummary(!!checked)} 
+                  onChange={(e) => setIncludeProjectSummary(e.target.checked)} 
                 />
                 <div className="flex-1">
                   <Label htmlFor="project-summary" className="text-base font-medium flex items-center gap-2">
@@ -135,10 +138,11 @@ export function CodeToChatModal({
 
             {hasPreviousContext && (
               <div className="flex items-start space-x-3 p-3 border rounded-lg">
-                <Checkbox 
-                  id="previous-context" 
+                <input
+                  type="checkbox"
+                  id="previous-context"
                   checked={includePreviousContext} 
-                  onCheckedChange={(checked) => setIncludePreviousContext(!!checked)} 
+                  onChange={(e) => setIncludePreviousContext(e.target.checked)} 
                 />
                 <div className="flex-1">
                   <Label htmlFor="previous-context" className="text-base font-medium flex items-center gap-2">
@@ -200,6 +204,7 @@ export function CodeToChatModal({
     </Dialog>
   )
 }
+
 
 
 

@@ -224,14 +224,14 @@ export default function AnalyticsPage() {
                 </div>
                 <div className="flex items-center gap-2">
                   <Button
-                    variant={timeRange === 'daily' ? 'default' : 'ghost'}
+                    variant={timeRange === 'daily' ? 'primary' : 'ghost'}
                     size="sm"
                     onClick={() => setTimeRange('daily')}
                   >
                     Günlük
                   </Button>
                   <Button
-                    variant={timeRange === 'weekly' ? 'default' : 'ghost'}
+                    variant={timeRange === 'weekly' ? 'primary' : 'ghost'}
                     size="sm"
                     onClick={() => setTimeRange('weekly')}
                   >
@@ -522,7 +522,7 @@ export default function AnalyticsPage() {
                             </div>
                             <div>
                               <div className="font-medium text-foreground">{agent.name}</div>
-                              <div className="text-sm text-muted-foreground">{agent.role}</div>
+                              <div className="text-sm text-muted-foreground">{agent.description}</div>
                             </div>
                           </div>
                           <div className="text-right">

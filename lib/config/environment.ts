@@ -50,6 +50,11 @@ export const SECURITY_CONFIG = {
 
 // Validate required environment variables
 export function validateEnvironment(): void {
+  // Only require environment variables in production
+  if (!ENV.IS_PRODUCTION) {
+    return // Skip validation in development - fallbacks are used
+  }
+
   const required = [
     'NEXT_PUBLIC_API_BASE_URL',
   ]
@@ -57,18 +62,15 @@ export function validateEnvironment(): void {
   const missing = required.filter(key => !process.env[key])
   
   if (missing.length > 0) {
-    console.warn(`Missing environment variables: ${missing.join(', ')}`)
-    
-    if (ENV.IS_PRODUCTION) {
-      throw new Error(`Missing required environment variables: ${missing.join(', ')}`)
-    }
+    throw new Error(`Missing required environment variables: ${missing.join(', ')}`)
   }
 }
 
-// Initialize environment validation
-if (typeof window === 'undefined') { // Server-side only
+// Initialize environment validation (only at runtime, not during build)
+if (typeof window === 'undefined' && process.env.NODE_ENV === 'production' && !process.env.NEXT_PHASE) {
   validateEnvironment()
 }
+
 
 
 

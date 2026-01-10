@@ -229,7 +229,7 @@ class PortfolioManager {
 
   // Public Profile Methods
   getPublicProfile(username: string): PublicProfile | null {
-    for (const profile of this.profiles.values()) {
+    for (const profile of Array.from(this.profiles.values())) {
       if (profile.username === username && profile.isPublic) {
         return profile
       }
@@ -518,6 +518,7 @@ export const getVisibilityName = (visibility: ProjectVisibility): string => {
   }
   return names[visibility] || 'Private'
 }
+
 
 
 

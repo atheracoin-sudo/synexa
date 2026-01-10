@@ -3,8 +3,9 @@
 import React, { useState } from 'react'
 import { useAgents } from '@/lib/hooks/useAgents'
 import { AIAgent } from '@/lib/types'
+import { WorkflowAgent } from '@/lib/agents'
 import { cn } from '@/lib/utils'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/ui/Button'
 import { SimpleDropdown, SimpleDropdownItem } from '@/components/ui/simple-dropdown'
 import { Badge } from '@/components/ui/badge'
 import { ChevronDown, Bot, Plus, Sparkles } from 'lucide-react'
@@ -21,7 +22,7 @@ export function AgentSelector({ className, onCreateAgent }: AgentSelectorProps) 
     selectAgent(agentId)
   }
 
-  const getAgentCapabilityBadges = (agent: AIAgent) => {
+  const getAgentCapabilityBadges = (agent: WorkflowAgent) => {
     const capabilityColors = {
       chat: 'bg-blue-500/10 text-blue-500',
       code: 'bg-green-500/10 text-green-500', 
@@ -29,15 +30,8 @@ export function AgentSelector({ className, onCreateAgent }: AgentSelectorProps) 
       analysis: 'bg-orange-500/10 text-orange-500'
     }
 
-    return agent.capabilities.map(cap => (
-      <Badge 
-        key={cap} 
-        variant="secondary" 
-        className={cn("text-xs", capabilityColors[cap])}
-      >
-        {cap}
-      </Badge>
-    ))
+    // WorkflowAgent doesn't have capabilities, return empty array
+    return []
   }
 
   return (
@@ -51,7 +45,7 @@ export function AgentSelector({ className, onCreateAgent }: AgentSelectorProps) 
             <div className="flex items-center gap-2">
               {currentAgent ? (
                 <>
-                  <span className="text-lg">{currentAgent.avatar}</span>
+                  <span className="text-lg">{currentAgent.icon}</span>
                   <span className="font-medium">{currentAgent.name}</span>
                 </>
               ) : (
@@ -91,7 +85,7 @@ export function AgentSelector({ className, onCreateAgent }: AgentSelectorProps) 
             <Sparkles className="h-3 w-3" />
             Hazır Agentlar
           </div>
-          {agents.filter(agent => agent.isBuiltIn).map((agent) => (
+          {agents.map((agent) => (
             <SimpleDropdownItem
               key={agent.id}
               onClick={() => handleAgentSelect(agent.id)}
@@ -100,7 +94,7 @@ export function AgentSelector({ className, onCreateAgent }: AgentSelectorProps) 
                 currentAgent?.id === agent.id && "bg-muted"
               )}
             >
-              <span className="text-xl flex-shrink-0 mt-0.5">{agent.avatar}</span>
+              <span className="text-xl flex-shrink-0 mt-0.5">{agent.icon}</span>
               <div className="flex-1 min-w-0">
                 <div className="font-medium text-sm">{agent.name}</div>
                 <div className="text-xs text-muted-foreground mb-2 line-clamp-2">
@@ -115,34 +109,14 @@ export function AgentSelector({ className, onCreateAgent }: AgentSelectorProps) 
         </div>
 
         {/* Custom Agents */}
-        {agents.filter(agent => !agent.isBuiltIn).length > 0 && (
+        {false && ( // Disabled custom agents section for WorkflowAgent
           <>
             <div className="my-2 h-px bg-border" />
             <div className="px-2 py-1">
               <div className="text-xs font-medium text-muted-foreground mb-2">
                 Özel Agentlar
               </div>
-              {agents.filter(agent => !agent.isBuiltIn).map((agent) => (
-                <SimpleDropdownItem
-                  key={agent.id}
-                  onClick={() => handleAgentSelect(agent.id)}
-                  className={cn(
-                    "flex items-start gap-3 p-3 mb-1",
-                    currentAgent?.id === agent.id && "bg-muted"
-                  )}
-                >
-                  <span className="text-xl flex-shrink-0 mt-0.5">{agent.avatar}</span>
-                  <div className="flex-1 min-w-0">
-                    <div className="font-medium text-sm">{agent.name}</div>
-                    <div className="text-xs text-muted-foreground mb-2 line-clamp-2">
-                      {agent.description}
-                    </div>
-                    <div className="flex flex-wrap gap-1">
-                      {getAgentCapabilityBadges(agent)}
-                    </div>
-                  </div>
-                </SimpleDropdownItem>
-              ))}
+              {/* Custom agents disabled for WorkflowAgent */}
             </div>
           </>
         )}
@@ -165,13 +139,14 @@ export function AgentSelector({ className, onCreateAgent }: AgentSelectorProps) 
       {/* Current Agent Badge */}
       {currentAgent && (
         <Badge variant="secondary" className="flex items-center gap-1">
-          <span>{currentAgent.avatar}</span>
-          <span className="text-xs">{currentAgent.role}</span>
+          <span>{currentAgent.icon}</span>
+          <span className="text-xs">{currentAgent.description}</span>
         </Badge>
       )}
     </div>
   )
 }
+
 
 
 

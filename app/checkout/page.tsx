@@ -83,7 +83,7 @@ export default function CheckoutPage() {
   const calculateTotalPrice = () => {
     if (!plan) return 0
     const basePrice = pricingManager.getPrice(plan.id, currentBilling)
-    if (plan.id === 'team') {
+    if (plan.id === 'team' as any as any) {
       return basePrice * teamSeats
     }
     return basePrice
@@ -157,7 +157,7 @@ export default function CheckoutPage() {
               <Check className="h-8 w-8 text-green-500" />
             </div>
             <h1 className="text-3xl font-bold text-foreground mb-2">
-              {plan.id === 'team' ? 'Team Plan\'a hoş geldin!' : 'Premium\'a hoş geldin!'}
+              {plan.id === 'team' as any as any ? 'Team Plan\'a hoş geldin!' : 'Premium\'a hoş geldin!'}
             </h1>
             <p className="text-muted-foreground text-lg">
               Tüm özellikler artık açık.
@@ -259,7 +259,7 @@ export default function CheckoutPage() {
               </div>
 
               {/* Team seats selector */}
-              {plan.id === 'team' && (
+              {plan.id === 'team' as any && (
                 <div className="mb-6 p-4 bg-muted/30 rounded-xl">
                   <Label className="text-sm font-medium text-foreground mb-3 block">
                     Team size
@@ -339,7 +339,7 @@ export default function CheckoutPage() {
 
               <form onSubmit={handleSubmit} className="space-y-4">
                 {/* Team name for team plans */}
-                {plan.id === 'team' && (
+                {plan.id === 'team' as any && (
                   <div>
                     <Label htmlFor="teamName" className="text-sm font-medium text-foreground">
                       Team name

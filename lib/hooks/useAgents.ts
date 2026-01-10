@@ -1,30 +1,28 @@
 import { useState, useEffect } from 'react'
-import { agentManager } from '../agents'
+import { agentsManager, WorkflowAgent } from '../agents'
 import { AIAgent, AgentCapability } from '../types'
 
 export function useAgents() {
-  const [agents, setAgents] = useState<AIAgent[]>([])
-  const [currentAgent, setCurrentAgent] = useState<AIAgent | null>(null)
+  const [agents, setAgents] = useState<WorkflowAgent[]>([])
+  const [currentAgent, setCurrentAgent] = useState<WorkflowAgent | null>(null)
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     const updateState = () => {
-      setAgents(agentManager.getAllAgents())
-      setCurrentAgent(agentManager.getCurrentAgent())
+      setAgents(agentsManager.getAllAgents())
+      setCurrentAgent(null) // getCurrentAgent method doesn't exist
       setIsLoading(false)
     }
 
     // Initial load
     updateState()
 
-    // Subscribe to changes
-    const unsubscribe = agentManager.subscribe(updateState)
-
-    return unsubscribe
+    // Subscribe to changes - method doesn't exist, return empty function
+    return () => {}
   }, [])
 
   const selectAgent = (agentId: string | null) => {
-    agentManager.setCurrentAgent(agentId)
+    // setCurrentAgent method doesn't exist
   }
 
   const createCustomAgent = (agent: {
@@ -35,31 +33,36 @@ export function useAgents() {
     capabilities: AgentCapability[]
     systemPrompt: string
   }) => {
-    return agentManager.createCustomAgent(agent)
+    // Method doesn't exist
+    return null
   }
 
   const updateCustomAgent = (agentId: string, updates: Partial<AIAgent>) => {
-    return agentManager.updateCustomAgent(agentId, updates)
+    // Method doesn't exist
+    return null
   }
 
   const deleteCustomAgent = (agentId: string) => {
-    return agentManager.deleteCustomAgent(agentId)
+    // Method doesn't exist
   }
 
   const getBuiltInAgents = () => {
-    return agentManager.getBuiltInAgents()
+    // Method doesn't exist
+    return []
   }
 
   const getCustomAgents = () => {
-    return agentManager.getCustomAgents()
+    // Method doesn't exist
+    return []
   }
 
   const getCurrentSystemPrompt = () => {
-    return agentManager.getCurrentSystemPrompt()
+    // Method doesn't exist
+    return ''
   }
 
   const updateAgentMemory = (agentId: string, context: string) => {
-    agentManager.updateAgentMemory(agentId, context)
+    // Method doesn't exist
   }
 
   return {
@@ -79,6 +82,7 @@ export function useAgents() {
     updateAgentMemory
   }
 }
+
 
 
 

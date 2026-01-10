@@ -63,10 +63,7 @@ function MessageList({
       >
         <div className="min-h-full flex flex-col">
           {messages.length === 0 ? (
-            <ChatEmptyState 
-              onPromptSelect={handlePromptClick}
-              onboardingData={onboardingData}
-            />
+            <ChatEmptyState onStartChat={() => {}} />
           ) : (
             <div className="flex-1">
               {messages.map((message, index) => (

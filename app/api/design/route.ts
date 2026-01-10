@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { DesignRequest } from '@/lib/types'
+import { DesignRequest, DesignScene } from '@/lib/types'
 import { designRateLimit, getClientIP } from '@/lib/security/rateLimit'
 import { 
   validateRequestSize, 

@@ -7,7 +7,7 @@ import {
   Eye,
   Users,
   ArrowRight,
-  Fire,
+  Flame,
   Sparkles,
   Code,
   Bot,
@@ -78,7 +78,7 @@ export function TemplateCard({
               {template.title}
             </h3>
             {template.isPremium && <Crown className="w-4 h-4 text-yellow-400 flex-shrink-0" />}
-            {template.isNew && <Fire className="w-4 h-4 text-green-400 flex-shrink-0" />}
+            {template.isNew && <Flame className="w-4 h-4 text-green-400 flex-shrink-0" />}
           </div>
           <p className="text-gray-400 text-sm truncate">{template.shortDescription}</p>
           <div className="flex items-center gap-3 mt-2 text-xs text-gray-500">
@@ -134,7 +134,7 @@ export function TemplateCard({
             <div className="absolute bottom-4 right-4 flex flex-col gap-2">
               {template.isPopular && (
                 <div className="flex items-center gap-1 px-3 py-1 bg-red-600/90 backdrop-blur-sm rounded-lg text-sm text-white">
-                  <Fire className="w-4 h-4" />
+                  <Flame className="w-4 h-4" />
                   <span>Popular</span>
                 </div>
               )}
@@ -241,7 +241,7 @@ export function TemplateCard({
           <div className="absolute bottom-3 right-3 flex flex-col gap-1">
             {template.isPopular && (
               <div className="flex items-center gap-1 px-2 py-1 bg-red-600/80 backdrop-blur-sm rounded text-xs text-white">
-                <Fire className="w-3 h-3" />
+                <Flame className="w-3 h-3" />
                 <span>Hot</span>
               </div>
             )}
@@ -325,6 +325,7 @@ export function TemplateCard({
     </div>
   )
 }
+
 
 
 

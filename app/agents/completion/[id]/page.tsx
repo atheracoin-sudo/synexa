@@ -79,7 +79,7 @@ export default function AgentCompletionPage() {
   }
 
   const getToolIcon = (tool: string) => {
-    const icons = {
+    const icons: Record<string, React.ReactElement> = {
       chat: <MessageCircle className="w-5 h-5" />,
       code: <Code className="w-5 h-5" />,
       image: <ImageIcon className="w-5 h-5" />,
@@ -410,6 +410,7 @@ export default function AgentCompletionPage() {
     </div>
   )
 }
+
 
 
 

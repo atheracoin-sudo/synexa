@@ -55,11 +55,11 @@ export default function ErrorMessage({ message, onRetry, onDismiss }: ErrorMessa
             <div className="flex items-center gap-2">
               {onRetry && (
                 <Button
-                  variant="danger"
+                  variant="destructive"
                   size="sm"
                   onClick={onRetry}
-                  leftIcon={<RefreshCw className="h-3.5 w-3.5" />}
                 >
+                  <RefreshCw className="h-3.5 w-3.5 mr-2" />
                   Tekrar Dene
                 </Button>
               )}

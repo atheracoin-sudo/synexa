@@ -44,7 +44,7 @@ export default function InvitePage() {
     const userId = 'demo-user' // In real app, get from auth
     const data = referralManager.getReferralData(userId)
     const invites = referralManager.getReferralInvites(userId)
-    const rewards = referralManager.getAvailableRewards(userPlan.id as 'free' | 'premium' | 'team')
+    const rewards = referralManager.getAvailableRewards(userPlan.type as 'free' | 'premium' | 'team')
     
     setReferralData(data)
     setReferralInvites(invites)
@@ -87,7 +87,7 @@ export default function InvitePage() {
     setShowShareModal(false)
   }
 
-  const progressData = referralData ? referralManager.getProgressToNextReward('demo-user', userPlan.id as 'free' | 'premium' | 'team') : null
+  const progressData = referralData ? referralManager.getProgressToNextReward('demo-user', userPlan.type as 'free' | 'premium' | 'team') : null
 
   if (!referralData) {
     return (
@@ -574,6 +574,7 @@ function EmailInviteModal({ isOpen, onClose, referralLink }: EmailInviteModalPro
     </div>
   )
 }
+
 
 
 

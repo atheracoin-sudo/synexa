@@ -322,3 +322,4 @@ export function CompactGoalCard({ goal, onClick, className }: CompactGoalCardPro
 
 
 
+

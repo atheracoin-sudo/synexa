@@ -81,7 +81,7 @@ export default function UsageDetailPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      <GlobalHeader />
+      <GlobalHeader title="Usage" />
       
       <main className="container mx-auto px-4 py-6 pb-24">
         {/* Header */}
@@ -353,6 +353,7 @@ export default function UsageDetailPage() {
     </div>
   )
 }
+
 
 
 

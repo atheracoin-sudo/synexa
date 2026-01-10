@@ -20,19 +20,19 @@ export default function ChangelogUpdateTrigger({ userId }: ChangelogUpdateTrigge
     // Check if we should notify about the latest version
     if (latestVersion && shouldShowWhatsNew) {
       // Add notification for the latest version
-      const summary = getVersionSummary(latestVersion.id)
+      const summary = getVersionSummary(latestVersion?.id || '')
       
       addNotification({
         type: 'updates',
         priority: 'medium',
         title: 'Yeni özellikler eklendi 🚀',
-        message: `${latestVersion.title}: ${summary}`,
+        message: `${latestVersion?.title}: ${summary}`,
         icon: 'Sparkles',
         actionUrl: '/changelog',
         actionText: 'Gör',
         metadata: {
-          versionId: latestVersion.id,
-          versionTitle: latestVersion.title,
+          versionId: latestVersion?.id || '',
+          versionTitle: latestVersion?.title || '',
           summary
         }
       })

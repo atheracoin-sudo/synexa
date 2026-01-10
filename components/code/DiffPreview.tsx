@@ -55,14 +55,14 @@ function DiffPreview({ patch }: DiffPreviewProps) {
           border: 'border-blue-500/30',
           bg: 'bg-blue-500/5',
           icon: 'text-blue-500',
-          badge: 'primary' as const,
+          badge: 'default' as const,
         }
       case 'delete':
         return {
           border: 'border-destructive/30',
           bg: 'bg-destructive/5',
           icon: 'text-destructive',
-          badge: 'danger' as const,
+          badge: 'destructive' as const,
         }
       case 'rename':
         return {
@@ -85,23 +85,23 @@ function DiffPreview({ patch }: DiffPreviewProps) {
     <div className="p-4 space-y-4">
       {/* Stats Summary */}
       <div className="flex items-center flex-wrap gap-2">
-        <Badge variant="primary" size="sm">
+        <Badge variant="default" >
           {stats.total} değişiklik
         </Badge>
         {stats.writes > 0 && (
-          <Badge variant="primary" size="sm">
+          <Badge variant="default" >
             <Plus className="h-3 w-3 mr-1" />
             {stats.writes} yazma
           </Badge>
         )}
         {stats.deletes > 0 && (
-          <Badge variant="danger" size="sm">
+          <Badge variant="destructive" >
             <Minus className="h-3 w-3 mr-1" />
             {stats.deletes} silme
           </Badge>
         )}
         {stats.renames > 0 && (
-          <Badge variant="warning" size="sm">
+          <Badge variant="warning" >
             <Edit className="h-3 w-3 mr-1" />
             {stats.renames} yeniden adlandırma
           </Badge>
@@ -138,7 +138,7 @@ function DiffPreview({ patch }: DiffPreviewProps) {
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">
-                  <Badge variant={styles.badge} size="sm">
+                  <Badge variant={styles.badge} >
                     {getOperationLabel(operation.op)}
                   </Badge>
                 </div>

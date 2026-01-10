@@ -165,7 +165,7 @@ export class PerformanceMonitor {
 
   getAllStats() {
     const stats: Record<string, any> = {}
-    for (const [label] of this.metrics) {
+    for (const [label] of Array.from(this.metrics)) {
       stats[label] = this.getStats(label)
     }
     return stats
@@ -173,6 +173,7 @@ export class PerformanceMonitor {
 }
 
 export const performanceMonitor = PerformanceMonitor.getInstance()
+
 
 
 

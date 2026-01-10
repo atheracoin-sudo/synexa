@@ -200,7 +200,7 @@ export interface UserPreferences {
 }
 
 // Premium & Monetization types
-export type PlanType = 'free' | 'premium'
+export type PlanType = 'free' | 'premium' | 'team'
 
 export interface UsageStats {
   chatMessages: number

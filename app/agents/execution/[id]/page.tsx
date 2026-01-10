@@ -111,7 +111,7 @@ export default function AgentExecutionPage() {
   }
 
   const getToolIcon = (tool: string) => {
-    const icons = {
+    const icons: Record<string, React.ReactElement> = {
       chat: <MessageCircle className="w-4 h-4" />,
       code: <Code className="w-4 h-4" />,
       image: <ImageIcon className="w-4 h-4" />,
@@ -457,7 +457,7 @@ export default function AgentExecutionPage() {
                         {getToolIcon(selectedTool)}
                       </div>
                       <h3 className="text-lg font-semibold text-white mb-2">
-                        {agentsManager.getToolName(selectedTool)} Output
+                        {agentsManager.getToolName(selectedTool as any)} Output
                       </h3>
                       <p className="text-gray-400">
                         This tool will be used in upcoming steps. Switch to active tools to see current progress.
@@ -476,6 +476,7 @@ export default function AgentExecutionPage() {
     </div>
   )
 }
+
 
 
 

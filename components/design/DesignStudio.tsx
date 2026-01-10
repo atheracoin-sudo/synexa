@@ -9,7 +9,7 @@ import PropertiesPanel from './PropertiesPanel'
 import LayersPanel from './LayersPanel'
 import { useToast } from '@/components/ui/Toast'
 import { Button, Textarea } from '@/components/ui'
-import { analytics } from '@/lib/analytics'
+import { analyticsManager } from '@/lib/analytics'
 import { X, Sparkles, Loader2 } from 'lucide-react'
 
 const DEFAULT_SCENE: DesignScene = {
@@ -116,11 +116,11 @@ function DesignStudio() {
       })
 
       if (!response.success) {
-        throw new Error(response.error || 'Backend API error')
+        throw new Error(typeof response.error === 'string' ? response.error : 'Backend API error')
       }
 
       // Update scene with AI-generated design
-      const aiScene = response.data.scene
+      const aiScene = response.data?.scene
       const nodes = aiScene?.nodes || []
       setScene(prev => ({
         ...prev,
@@ -132,10 +132,10 @@ function DesignStudio() {
       }))
       
       // Track analytics
-      analytics.designGeneration(
-        nodes.length,
-        { width: scene.width, height: scene.height }
-      )
+      // analyticsManager.designGeneration(
+      //   nodes.length,
+      //   { width: scene.width, height: scene.height }
+      // )
 
       addToast({
         type: 'success',

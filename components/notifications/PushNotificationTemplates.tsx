@@ -1,7 +1,7 @@
 'use client'
 
 import { Bell, Code2, Image, Users, Clock, Award, AlertTriangle } from 'lucide-react'
-import { Notification } from '@/lib/notifications'
+import type { Notification } from '@/lib/notifications'
 
 interface PushNotificationPreviewProps {
   notification: Notification
@@ -230,6 +230,7 @@ export class PushNotificationService {
 
 // Export singleton instance
 export const pushNotificationService = PushNotificationService.getInstance()
+
 
 
 
