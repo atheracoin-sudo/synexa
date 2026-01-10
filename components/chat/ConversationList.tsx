@@ -16,8 +16,8 @@ import {
   Plus,
   ArchiveRestore
 } from 'lucide-react'
-import { Button } from '@/components/ui/Button'
-import { Input } from '@/components/ui/Input'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 import { SimpleDropdown, SimpleDropdownItem, SimpleDropdownSeparator } from '@/components/ui/simple-dropdown'
 import {
   AlertDialog,

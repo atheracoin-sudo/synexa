@@ -2,7 +2,7 @@
 
 import { useSync } from '@/lib/hooks/useSync'
 import { Wifi, WifiOff, RefreshCw, AlertCircle } from 'lucide-react'
-import { Button } from './Button'
+import { Button } from './button'
 
 interface SyncStatusProps {
   className?: string

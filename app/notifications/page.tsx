@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { ArrowLeft, Bell, Smartphone, Mail, Clock, Settings, Users, Sparkles, Activity, MessageCircle } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import { GlobalHeader } from '@/components/ui/GlobalHeader'
+import { GlobalHeader } from '@/components/ui/global-header'
 import { useNotifications } from '@/lib/hooks/useNotifications'
 import { NotificationSettings } from '@/lib/notifications'
 
@@ -375,6 +375,8 @@ export default function NotificationSettingsPage() {
     </div>
   )
 }
+
+
 
 
 

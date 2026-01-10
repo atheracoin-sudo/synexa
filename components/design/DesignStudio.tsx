@@ -7,7 +7,7 @@ import ToolsPanel from './ToolsPanel'
 import SimpleCanvas from './SimpleCanvas'
 import PropertiesPanel from './PropertiesPanel'
 import LayersPanel from './LayersPanel'
-import { useToast } from '@/components/ui/Toast'
+import { useToast } from '@/components/ui/use-toast'
 import { Button, Textarea } from '@/components/ui'
 import { analyticsManager } from '@/lib/analytics'
 import { X, Sparkles, Loader2 } from 'lucide-react'
@@ -27,7 +27,7 @@ function DesignStudio() {
   const [tool, setTool] = useState<'select' | 'text' | 'rect' | 'circle'>('select')
   const [showAIDialog, setShowAIDialog] = useState(false)
   const [isGenerating, setIsGenerating] = useState(false)
-  const { addToast } = useToast()
+  const { toast } = useToast()
 
   // Load scene from localStorage
   useEffect(() => {
@@ -52,7 +52,7 @@ function DesignStudio() {
       setScene(DEFAULT_SCENE)
       setSelectedNodeId(null)
       localStorage.removeItem('synexa-design-scene')
-      addToast({
+      toast({
         type: 'success',
         title: 'Yeni tasarım oluşturuldu',
       })
@@ -69,7 +69,7 @@ function DesignStudio() {
       window.removeEventListener('studio-action:new-design', handleNewDesign)
       window.removeEventListener('studio-action:export', handleExport)
     }
-  }, [addToast])
+  }, [toast])
 
   // Keyboard shortcuts
   useEffect(() => {
@@ -137,7 +137,7 @@ function DesignStudio() {
       //   { width: scene.width, height: scene.height }
       // )
 
-      addToast({
+      toast({
         type: 'success',
         title: 'AI tasarım oluşturuldu',
         description: `${nodes.length} öğe eklendi`,
@@ -145,7 +145,7 @@ function DesignStudio() {
     } catch (error) {
       console.error('AI generation failed:', error)
       const errorMessage = error instanceof Error ? error.message : 'Bir hata oluştu'
-      addToast({
+      toast({
         type: 'error',
         title: 'AI tasarım başarısız',
         description: errorMessage,
@@ -153,7 +153,7 @@ function DesignStudio() {
     } finally {
       setIsGenerating(false)
     }
-  }, [scene.width, scene.height, addToast])
+  }, [scene.width, scene.height, toast])
 
   const handleAddNode = useCallback((type: 'text' | 'rect' | 'circle') => {
     const newNode: DesignNode = {
@@ -179,11 +179,11 @@ function DesignStudio() {
     setSelectedNodeId(newNode.id)
     setTool('select')
     
-    addToast({
+    toast({
       type: 'success',
       title: `${type === 'text' ? 'Metin' : type === 'rect' ? 'Dikdörtgen' : 'Daire'} eklendi`,
     })
-  }, [scene.width, scene.height, addToast])
+  }, [scene.width, scene.height, toast])
 
   const handleNodeUpdate = useCallback((nodeId: string, updates: Partial<DesignNode>) => {
     setScene(prev => ({
@@ -204,11 +204,11 @@ function DesignStudio() {
       setSelectedNodeId(null)
     }
     
-    addToast({
+    toast({
       type: 'success',
       title: 'Öğe silindi',
     })
-  }, [selectedNodeId, addToast])
+  }, [selectedNodeId, toast])
 
   const handleSceneUpdate = useCallback((updates: Partial<DesignScene>) => {
     setScene(prev => ({ ...prev, ...updates }))

@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { GlobalHeader } from '@/components/ui/GlobalHeader'
-import { BottomTabBar } from '@/components/ui/BottomTabBar'
+import { GlobalHeader } from '@/components/ui/global-header'
+import { BottomTabBar } from '@/components/ui/bottom-tab-bar'
 import { portfolioManager, PublicProfile, PortfolioProject, getProjectTypeIcon, getProjectTypeName, getVisibilityIcon, getVisibilityName } from '@/lib/portfolio'
 import { PortfolioLimitIndicator, PremiumFeatureList } from '@/components/portfolio/PremiumPortfolioFeatures'
 import { 

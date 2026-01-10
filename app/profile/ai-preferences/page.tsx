@@ -8,7 +8,7 @@ import { useMemory } from '@/lib/hooks/useMemory'
 import { usePremium } from '@/lib/hooks/usePremium'
 import { MemoryCategory, MemoryItem } from '@/lib/types'
 import { useRouter } from 'next/navigation'
-import { useToast } from '@/components/ui/Toast'
+import { useToast } from '@/components/ui/use-toast'
 
 const CATEGORY_LABELS: Record<MemoryCategory, string> = {
   tech_stack: 'Teknoloji Stack',
@@ -32,7 +32,7 @@ const CATEGORY_COLORS: Record<MemoryCategory, string> = {
 
 export default function AIPreferencesPage() {
   const router = useRouter()
-  const { addToast } = useToast()
+  const { toast } = useToast()
   const { memoryContext, toggleMemory, deleteMemory, addMemory } = useMemory()
   const { isPremium } = usePremium()
   const [showAddForm, setShowAddForm] = useState(false)
@@ -40,7 +40,7 @@ export default function AIPreferencesPage() {
 
   const handleToggleMemory = (memoryId: string) => {
     toggleMemory(memoryId)
-    addToast({
+    toast({
       type: 'success',
       title: 'Tercih güncellendi',
       duration: 2000,
@@ -50,7 +50,7 @@ export default function AIPreferencesPage() {
   const handleDeleteMemory = (memoryId: string, title: string) => {
     if (confirm(`"${title}" tercihini silmek istediğinize emin misiniz?`)) {
       deleteMemory(memoryId)
-      addToast({
+      toast({
         type: 'success',
         title: 'Tercih silindi',
         duration: 2000,
@@ -60,7 +60,7 @@ export default function AIPreferencesPage() {
 
   const handleAddMemory = () => {
     if (!newMemory.title.trim() || !newMemory.value.trim()) {
-      addToast({
+      toast({
         type: 'error',
         title: 'Lütfen tüm alanları doldurun',
       })
@@ -69,7 +69,7 @@ export default function AIPreferencesPage() {
 
     // Check free user limits
     if (!isPremium && memoryContext.totalItems >= 3) {
-      addToast({
+      toast({
         type: 'error',
         title: 'Free kullanıcılar en fazla 3 tercih kaydedebilir. Premium ile sınırsız tercih ekleyin.',
         duration: 4000,
@@ -80,7 +80,7 @@ export default function AIPreferencesPage() {
     addMemory(newMemory.category, newMemory.title, newMemory.value, 'manual')
     setNewMemory({ title: '', value: '', category: 'custom' })
     setShowAddForm(false)
-    addToast({
+    toast({
       type: 'success',
       title: 'Yeni tercih eklendi! 💾',
       duration: 2000,

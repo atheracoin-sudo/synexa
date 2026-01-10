@@ -13,8 +13,8 @@ import {
   Zap,
   Shield
 } from 'lucide-react'
-import { GlobalHeader } from '@/components/ui/GlobalHeader'
-import { BottomTabBar } from '@/components/ui/BottomTabBar'
+import { GlobalHeader } from '@/components/ui/global-header'
+import { BottomTabBar } from '@/components/ui/bottom-tab-bar'
 import { PremiumBadge } from '@/components/premium/FeatureLock'
 import { cn } from '@/lib/utils'
 import { PLANS, PLAN_FEATURES, PricingAPI } from '@/lib/api/pricing'

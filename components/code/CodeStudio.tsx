@@ -6,12 +6,12 @@ import { VirtualFileSystem } from '@/lib/fs/virtualFs'
 import FileTree from './FileTree'
 import EditorPane from './EditorPane'
 import AIPanel from './AIPanel'
-import { useToast } from '@/components/ui/Toast'
+import { useToast } from '@/components/ui/use-toast'
 
 function CodeStudio() {
   const [workspace, setWorkspace] = useState<Workspace | null>(null)
   const [loading, setLoading] = useState(true)
-  const { addToast } = useToast()
+  const { toast } = useToast()
 
   useEffect(() => {
     // Load or create default workspace
@@ -35,7 +35,7 @@ function CodeStudio() {
         const updatedWorkspace = VirtualFileSystem.createFile(workspace, path, '')
         setWorkspace(updatedWorkspace)
         VirtualFileSystem.saveWorkspace(updatedWorkspace)
-        addToast({
+        toast({
           type: 'success',
           title: 'Dosya oluşturuldu',
           description: path,
@@ -46,7 +46,7 @@ function CodeStudio() {
     const handleSave = () => {
       if (workspace) {
         VirtualFileSystem.saveWorkspace(workspace)
-        addToast({
+        toast({
           type: 'success',
           title: 'Kaydedildi',
           description: 'Tüm değişiklikler kaydedildi',
@@ -61,7 +61,7 @@ function CodeStudio() {
       window.removeEventListener('studio-action:new-file', handleNewFile)
       window.removeEventListener('studio-action:save', handleSave)
     }
-  }, [workspace, addToast])
+  }, [workspace, toast])
 
   // Keyboard shortcuts
   useEffect(() => {
@@ -119,13 +119,13 @@ function CodeStudio() {
       const updatedWorkspace = VirtualFileSystem.deleteFile(workspace, path)
       setWorkspace(updatedWorkspace)
       VirtualFileSystem.saveWorkspace(updatedWorkspace)
-      addToast({
+      toast({
         type: 'success',
         title: 'Dosya silindi',
         description: path,
       })
     }
-  }, [workspace, addToast])
+  }, [workspace, toast])
 
   const handleFileRename = useCallback((path: string, newName: string) => {
     if (!workspace) return
@@ -136,12 +136,12 @@ function CodeStudio() {
     const updatedWorkspace = VirtualFileSystem.renameFile(workspace, path, newPath)
     setWorkspace(updatedWorkspace)
     VirtualFileSystem.saveWorkspace(updatedWorkspace)
-    addToast({
+    toast({
       type: 'success',
       title: 'Dosya yeniden adlandırıldı',
       description: `${path} → ${newPath}`,
     })
-  }, [workspace, addToast])
+  }, [workspace, toast])
 
   const handleWorkspaceUpdate = useCallback((updatedWorkspace: Workspace) => {
     setWorkspace(updatedWorkspace)

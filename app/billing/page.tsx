@@ -13,9 +13,9 @@ import {
   ExternalLink,
   Settings
 } from 'lucide-react'
-import { Button } from '@/components/ui/Button'
-import { Card } from '@/components/ui/Card'
-import { Badge } from '@/components/ui/Badge'
+import { Button } from '@/components/ui/button'
+import { Card } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
 // Modal components will be inline for now
 import { pricingManager } from '@/lib/pricing'
 

@@ -7,7 +7,7 @@ import { generateId, isNearBottom, cn } from '@/lib/utils'
 import MessageList from './MessageList'
 import Composer from './Composer'
 import ErrorMessage from './ErrorMessage'
-import { useToast } from '@/components/ui/Toast'
+import { useToast } from '@/components/ui/use-toast'
 import { useAuth } from '@/lib/hooks/useAuth'
 import { useWorkspaces } from '@/lib/hooks/useWorkspaces'
 import { useSync } from '@/lib/hooks/useSync'
@@ -19,9 +19,9 @@ import { AgentSelector } from '@/components/agents/AgentSelector'
 import { SmartUsageBanner } from '@/components/premium/UsageTease'
 import { PremiumBadge } from '@/components/premium/PremiumBadge'
 import { MemorySuggestion } from '@/components/memory/MemorySuggestion'
-import { SystemStatus } from '@/components/ui/SystemStatus'
-import { PoweredBy } from '@/components/ui/PoweredBy'
-import { ProductionErrorModal } from '@/components/ui/ProductionErrorModal'
+import { SystemStatus } from '@/components/ui/system-status'
+import { PoweredBy } from '@/components/ui/powered-by'
+import { ProductionErrorModal } from '@/components/ui/production-error-modal'
 import { GracefulFallback } from '@/components/chat/GracefulFallback'
 import { CodeStudioContextModal, CodeStudioContext } from '@/components/chat/CodeStudioContextModal'
 import { usePageTips } from '@/lib/hooks/useTips'
@@ -33,11 +33,12 @@ import { useAchievements } from '@/lib/hooks/useAchievements'
 import AchievementUnlockModal from '@/components/achievements/AchievementUnlockModal'
 import { RotateCcw, Settings, Plus } from 'lucide-react'
 import { analyticsManager } from '@/lib/analytics'
-import { SyncStatus } from '@/components/ui/SyncStatus'
+import { SyncStatus } from '@/components/ui/sync-status'
 // import { TypingIndicator } from '@/components/ui/LoadingSpinner'
 // import { FadeIn, AnimatedList } from '@/components/ui/FadeIn'
-import { Button } from '@/components/ui/Button'
-import { GlobalHeader, BottomTabBar } from '@/components/ui'
+import { Button } from '@/components/ui/button'
+import { GlobalHeader } from '@/components/ui/global-header'
+import { BottomTabBar } from '@/components/ui/bottom-tab-bar'
 
 // Debug state type
 interface DebugInfo {
@@ -87,7 +88,7 @@ function ChatView() {
   const abortControllerRef = useRef<AbortController | null>(null)
   const messagesContainerRef = useRef<HTMLDivElement>(null)
   const lastUserMessageRef = useRef<string | null>(null)
-  const { addToast } = useToast()
+  const { toast } = useToast()
   
   // Auth and workspace hooks (only on client)
   const { isAuthenticated, user, login, isLoading: authLoading } = useAuth()
@@ -176,7 +177,7 @@ function ChatView() {
       setMessages([])
       setError(null)
       localStorage.removeItem('synexa-chat-messages')
-      addToast({
+      toast({
         type: 'success',
         title: 'Yeni sohbet başlatıldı',
       })
@@ -184,7 +185,7 @@ function ChatView() {
 
     window.addEventListener('studio-action:new-chat', handleNewChat)
     return () => window.removeEventListener('studio-action:new-chat', handleNewChat)
-  }, [addToast])
+  }, [toast])
 
   // Keyboard shortcuts
   useEffect(() => {
@@ -205,13 +206,13 @@ function ChatView() {
     const result = await login()
     if (result.success) {
       // analyticsManager.userLogin('demo')
-      addToast({
+      toast({
         type: 'success',
         title: 'Giriş başarılı',
       })
     } else {
       // analyticsManager.error('login_failed', result.error || 'Unknown error', 'ChatView')
-      addToast({
+      toast({
         type: 'error',
         title: 'Giriş başarısız',
         description: result.error,
@@ -238,7 +239,7 @@ function ChatView() {
       const memoryData = parseRememberCommand(content.trim())
       if (memoryData) {
         addMemory(memoryData.category, memoryData.title, memoryData.value, 'command')
-        addToast({
+        toast({
           type: 'success',
           title: 'Bu tercih kaydedildi! 💾',
           duration: 3000,
@@ -447,7 +448,7 @@ function ChatView() {
     } catch (error) {
       if (error instanceof Error && error.name === 'AbortError') {
         // Request was aborted, don't show error
-        addToast({
+        toast({
           type: 'info',
           title: 'Yanıt durduruldu',
         })
@@ -486,7 +487,7 @@ function ChatView() {
       setIsLoading(false)
       abortControllerRef.current = null
     }
-  }, [messages, addToast, isAuthenticated, activeWorkspaceId])
+  }, [messages, toast, isAuthenticated, activeWorkspaceId])
 
   const handleStopGeneration = useCallback(() => {
     if (abortControllerRef.current) {
@@ -525,11 +526,11 @@ function ChatView() {
 
   // Message actions
   const handleCopy = useCallback((content: string) => {
-    addToast({
+    toast({
       type: 'success',
       title: 'Mesaj kopyalandı!'
     })
-  }, [addToast])
+  }, [toast])
 
   const handleRegenerate = useCallback((messageId: string) => {
     // Find the message and regenerate response
@@ -545,22 +546,22 @@ function ChatView() {
   }, [messages, handleSendMessage])
 
   const handleThumbsUp = useCallback((messageId: string) => {
-    addToast({
+    toast({
       type: 'success',
       title: 'Geri bildirim için teşekkürler! 👍'
     })
     // Here you could send feedback to analytics
     // analyticsManager.messageFeedback(messageId, 'positive')
-  }, [addToast])
+  }, [toast])
 
   const handleThumbsDown = useCallback((messageId: string) => {
-    addToast({
+    toast({
       type: 'info',
       title: 'Geri bildirim için teşekkürler! Daha iyi olmaya çalışacağız. 👎'
     })
     // Here you could send feedback to analytics
     // analyticsManager.messageFeedback(messageId, 'negative')
-  }, [addToast])
+  }, [toast])
 
   const handleConvertToApp = useCallback((messageId: string, content: string) => {
     const message = messages.find(m => m.id === messageId)
@@ -586,12 +587,12 @@ function ChatView() {
     window.open('/code', '_blank')
     
     // Show success toast
-    addToast({
+    toast({
       type: 'success',
       title: 'Code Studio açılıyor... 🚀',
       duration: 2000,
     })
-  }, [getMemoryPromptContext, addToast])
+  }, [getMemoryPromptContext, toast])
 
   // Show loading screen during SSR or initial mount
   if (!mounted) {

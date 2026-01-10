@@ -1,8 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import { Card } from '@/components/ui/Card'
-import { Badge } from '@/components/ui/Badge'
+import { Card } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
 import { Crown, MessageSquare, Code2, Image, Bot, TrendingUp, ArrowRight } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useApp, useUsage, useUserPlan } from '@/lib/context/AppContext'

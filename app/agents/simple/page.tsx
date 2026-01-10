@@ -9,8 +9,8 @@ import {
   ChevronRight,
   Zap
 } from 'lucide-react'
-import { GlobalHeader } from '@/components/ui/GlobalHeader'
-import { BottomTabBar } from '@/components/ui/BottomTabBar'
+import { GlobalHeader } from '@/components/ui/global-header'
+import { BottomTabBar } from '@/components/ui/bottom-tab-bar'
 import { cn } from '@/lib/utils'
 import { AGENTS } from '@/lib/api/agents'
 
@@ -192,6 +192,8 @@ export default function SimpleAgentsPage() {
     </div>
   )
 }
+
+
 
 
 

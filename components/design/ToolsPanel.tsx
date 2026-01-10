@@ -3,7 +3,7 @@
 import { useEffect, memo } from 'react'
 import { MousePointer, Type, Square, Circle, Sparkles, Image } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { Tooltip } from '@/components/ui/Tooltip'
+import { Tooltip } from '@/components/ui/tooltip'
 
 interface ToolsPanelProps {
   activeTool: 'select' | 'text' | 'rect' | 'circle'

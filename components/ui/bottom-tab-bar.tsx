@@ -13,7 +13,7 @@ import {
   Store
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { CreateStudioModal } from './CreateStudioModal'
+import { CreateStudioModal } from './create-studio-modal'
 
 const tabs = [
   {

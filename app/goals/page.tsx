@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { Target, Plus, Filter, ArrowLeft, Trophy, Flame, Crown } from 'lucide-react'
-import { GlobalHeader } from '@/components/ui/GlobalHeader'
+import { GlobalHeader } from '@/components/ui/global-header'
 import { GoalProgressList } from '@/components/goals/GoalProgressCard'
 import { AllStreaksList } from '@/components/goals/StreakDisplay'
 import { GoalCreationModal } from '@/components/goals/GoalCreationModal'

@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from 'react'
 import { useParams, useRouter } from 'next/navigation'
-import { GlobalHeader } from '@/components/ui/GlobalHeader'
-import { BottomTabBar } from '@/components/ui/BottomTabBar'
+import { GlobalHeader } from '@/components/ui/global-header'
+import { BottomTabBar } from '@/components/ui/bottom-tab-bar'
 import { PremiumTemplateModal } from '@/components/marketplace/PremiumTemplateModal'
 import { marketplaceManager, DesignTemplate } from '@/lib/marketplace'
 import { 

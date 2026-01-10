@@ -15,7 +15,7 @@ import {
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useRouter } from 'next/navigation'
-import { useToast } from '@/components/ui/Toast'
+import { useToast } from '@/components/ui/use-toast'
 
 const artStyles = [
   { id: 'realistic', name: 'Realistic', active: true },
@@ -41,7 +41,7 @@ const examplePrompts = [
 
 export default function ImageStudioPage() {
   const router = useRouter()
-  const { addToast } = useToast()
+  const { toast } = useToast()
   
   const [prompt, setPrompt] = useState('')
   const [selectedStyle, setSelectedStyle] = useState('realistic')
@@ -51,7 +51,7 @@ export default function ImageStudioPage() {
 
   const handleGenerate = useCallback(async () => {
     if (!prompt.trim()) {
-      addToast({
+      toast({
         type: 'error',
         title: 'Please enter a description',
         description: 'Describe what you want to create'
@@ -68,13 +68,13 @@ export default function ImageStudioPage() {
       // Mock generated image
       setGeneratedImage('/api/placeholder/512/512')
       
-      addToast({
+      toast({
         type: 'success',
         title: 'Image generated successfully!',
         description: 'Your AI artwork is ready'
       })
     } catch (error) {
-      addToast({
+      toast({
         type: 'error',
         title: 'Generation failed',
         description: 'Please try again'
@@ -82,7 +82,7 @@ export default function ImageStudioPage() {
     } finally {
       setIsGenerating(false)
     }
-  }, [prompt, addToast])
+  }, [prompt, toast])
 
   const handlePromptSelect = (selectedPrompt: string) => {
     setPrompt(selectedPrompt)

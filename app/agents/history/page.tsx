@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { GlobalHeader } from '@/components/ui/GlobalHeader'
-import { BottomTabBar } from '@/components/ui/BottomTabBar'
+import { GlobalHeader } from '@/components/ui/global-header'
+import { BottomTabBar } from '@/components/ui/bottom-tab-bar'
 import { agentsManager, AgentHistory, WorkflowAgent } from '@/lib/agents'
 import { 
   Clock,
@@ -386,6 +386,8 @@ export default function AgentHistoryPage() {
     </div>
   )
 }
+
+
 
 
 

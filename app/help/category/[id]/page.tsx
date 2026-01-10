@@ -1,8 +1,8 @@
 'use client'
 
 import { useParams } from 'next/navigation'
-import { GlobalHeader } from '@/components/ui/GlobalHeader'
-import { BottomTabBar } from '@/components/ui/BottomTabBar'
+import { GlobalHeader } from '@/components/ui/global-header'
+import { BottomTabBar } from '@/components/ui/bottom-tab-bar'
 import { HelpArticleCard } from '@/components/help/HelpArticle'
 import SmartSearch from '@/components/help/SmartSearch'
 import { helpManager, HelpCategory } from '@/lib/help'
@@ -227,6 +227,8 @@ export default function HelpCategoryPage() {
     </div>
   )
 }
+
+
 
 
 

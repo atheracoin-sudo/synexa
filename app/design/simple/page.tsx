@@ -14,8 +14,8 @@ import {
   Undo,
   Redo
 } from 'lucide-react'
-import { GlobalHeader } from '@/components/ui/GlobalHeader'
-import { BottomTabBar } from '@/components/ui/BottomTabBar'
+import { GlobalHeader } from '@/components/ui/global-header'
+import { BottomTabBar } from '@/components/ui/bottom-tab-bar'
 import { cn } from '@/lib/utils'
 import { useApp } from '@/lib/context/AppContext'
 
@@ -384,6 +384,8 @@ export default function SimpleImageStudio() {
     </div>
   )
 }
+
+
 
 
 

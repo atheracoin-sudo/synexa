@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter, useParams } from 'next/navigation'
-import { GlobalHeader } from '@/components/ui/GlobalHeader'
-import { BottomTabBar } from '@/components/ui/BottomTabBar'
+import { GlobalHeader } from '@/components/ui/global-header'
+import { BottomTabBar } from '@/components/ui/bottom-tab-bar'
 import { OrganizationSwitcher } from '@/components/enterprise/OrganizationSwitcher'
 import { enterpriseManager, type Organization } from '@/lib/enterprise'
 import { 
@@ -346,6 +346,8 @@ export default function AdminDashboardPage() {
     </div>
   )
 }
+
+
 
 
 

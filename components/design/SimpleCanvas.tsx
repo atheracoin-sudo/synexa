@@ -4,8 +4,8 @@ import { useRef, useEffect, useState, useCallback, memo } from 'react'
 import { DesignScene, DesignNode } from '@/lib/types'
 import { ZoomIn, ZoomOut, Maximize2, Grid3X3 } from 'lucide-react'
 import { IconButton, Badge } from '@/components/ui'
-import { Tooltip } from '@/components/ui/Tooltip'
-import { useToast } from '@/components/ui/Toast'
+import { Tooltip } from '@/components/ui/tooltip'
+import { useToast } from '@/components/ui/use-toast'
 import { cn } from '@/lib/utils'
 
 interface SimpleCanvasProps {
@@ -35,7 +35,7 @@ function SimpleCanvas({
   const [showGrid, setShowGrid] = useState(true)
   const [exportScale, setExportScale] = useState<1 | 2>(1)
   const [showExportMenu, setShowExportMenu] = useState(false)
-  const { addToast } = useToast()
+  const { toast } = useToast()
 
   // Handle export
   useEffect(() => {
@@ -123,12 +123,12 @@ function SimpleCanvas({
     document.body.removeChild(link)
 
     setShowExportMenu(false)
-    addToast({
+    toast({
       type: 'success',
       title: 'Export başarılı',
       description: `${scene.width * scale}x${scene.height * scale}px PNG kaydedildi`,
     })
-  }, [scene, addToast])
+  }, [scene, toast])
 
   // Draw scene
   useEffect(() => {

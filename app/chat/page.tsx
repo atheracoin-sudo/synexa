@@ -2,10 +2,10 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { Send, Plus, MessageSquare, Search } from 'lucide-react'
-import { GlobalHeader } from '@/components/ui/GlobalHeader'
-import { BottomTabBar } from '@/components/ui/BottomTabBar'
+import { GlobalHeader } from '@/components/ui/global-header'
+import { BottomTabBar } from '@/components/ui/bottom-tab-bar'
 import { ChatMessage } from '@/components/chat/ChatMessage'
-import { LoadingSpinner, EmptyState } from '@/components/ui/LoadingStates'
+import { LoadingSpinner, EmptyState } from '@/components/ui/loading-states'
 import { cn } from '@/lib/utils'
 import { toast } from '@/components/ui/use-toast'
 import { ChatAPI, ChatConversation, ChatMessage as ChatMessageType, streamChatResponse } from '@/lib/api/chat'

@@ -1,7 +1,7 @@
 'use client'
 
 import { MessageSquare, Code2, Image, Plus, ArrowRight } from 'lucide-react'
-import { Button } from '@/components/ui/Button'
+import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import Link from 'next/link'
 

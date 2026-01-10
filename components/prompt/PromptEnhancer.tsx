@@ -3,7 +3,7 @@
 import { useState, useCallback, useEffect } from 'react'
 import { Sparkles, Eye, EyeOff, Wand2, RefreshCw } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { Button } from '@/components/ui/Button'
+import { Button } from '@/components/ui/button'
 
 interface PromptEnhancerProps {
   originalPrompt: string

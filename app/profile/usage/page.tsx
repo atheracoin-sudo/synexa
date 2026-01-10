@@ -2,9 +2,9 @@
 
 import { useState } from 'react'
 import { GlobalHeader, BottomTabBar } from '@/components/ui'
-import { Card } from '@/components/ui/Card'
-import { Badge } from '@/components/ui/Badge'
-import { Button } from '@/components/ui/Button'
+import { Card } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
 import { 
   TrendingUp, 
   MessageSquare, 

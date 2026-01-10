@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter, useParams } from 'next/navigation'
-import { BottomTabBar } from '@/components/ui/BottomTabBar'
+import { BottomTabBar } from '@/components/ui/bottom-tab-bar'
 import { OrganizationSwitcher } from '@/components/enterprise/OrganizationSwitcher'
 import { enterpriseManager, type Organization, type SSOProvider } from '@/lib/enterprise'
 import { 
@@ -672,6 +672,8 @@ export default function SecurityPage() {
     </div>
   )
 }
+
+
 
 
 

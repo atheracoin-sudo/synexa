@@ -16,9 +16,9 @@ import {
   FileText,
   Image as ImageIcon
 } from 'lucide-react'
-import { GlobalHeader } from '@/components/ui/GlobalHeader'
-import { BottomTabBar } from '@/components/ui/BottomTabBar'
-import { EmptyState } from '@/components/ui/LoadingStates'
+import { GlobalHeader } from '@/components/ui/global-header'
+import { BottomTabBar } from '@/components/ui/bottom-tab-bar'
+import { EmptyState } from '@/components/ui/loading-states'
 import { cn } from '@/lib/utils'
 import { ChatAPI, ChatConversation } from '@/lib/api/chat'
 import { AgentAPI, AgentExecution } from '@/lib/api/agents'
@@ -388,6 +388,8 @@ export default function SimpleLibraryPage() {
     </div>
   )
 }
+
+
 
 
 

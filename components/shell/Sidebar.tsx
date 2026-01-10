@@ -14,7 +14,7 @@ import {
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { IconButton } from '@/components/ui'
-import { Tooltip } from '@/components/ui/Tooltip'
+import { Tooltip } from '@/components/ui/tooltip'
 // import { motion, AnimatePresence } from 'framer-motion'
 
 const navigation = [

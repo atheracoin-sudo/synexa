@@ -17,7 +17,7 @@ import {
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { IconButton, Card, Badge } from '@/components/ui'
-import { Tooltip } from '@/components/ui/Tooltip'
+import { Tooltip } from '@/components/ui/tooltip'
 
 interface LayersPanelProps {
   nodes: DesignNode[]

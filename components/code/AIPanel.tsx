@@ -5,7 +5,7 @@ import { Workspace, CodePatch } from '@/lib/types'
 import { VirtualFileSystem } from '@/lib/fs/virtualFs'
 import { Sparkles, Send, Check, X, Loader2, Undo2, Wand2 } from 'lucide-react'
 import { Button, IconButton, Card, Textarea } from '@/components/ui'
-import { useToast } from '@/components/ui/Toast'
+import { useToast } from '@/components/ui/use-toast'
 import DiffPreview from './DiffPreview'
 import { analyticsManager } from '@/lib/analytics'
 
@@ -21,7 +21,7 @@ function AIPanel({ workspace, onWorkspaceUpdate }: AIPanelProps) {
   const [error, setError] = useState<string | null>(null)
   const [previousWorkspace, setPreviousWorkspace] = useState<Workspace | null>(null)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
-  const { addToast } = useToast()
+  const { toast } = useToast()
 
   // Listen for AI generate shortcut from editor
   useEffect(() => {
@@ -77,7 +77,7 @@ function AIPanel({ workspace, onWorkspaceUpdate }: AIPanelProps) {
             //   response.data.operations?.length || 0
             // )
             
-            addToast({
+            toast({
               type: 'info',
               title: 'Değişiklikler hazır',
               description: 'Uygulamak veya reddetmek için seçim yapın',
@@ -86,7 +86,7 @@ function AIPanel({ workspace, onWorkspaceUpdate }: AIPanelProps) {
       console.error('AI request failed:', error)
       const errorMessage = error instanceof Error ? error.message : 'Bir hata oluştu'
       setError(errorMessage)
-      addToast({
+      toast({
         type: 'error',
         title: 'AI isteği başarısız',
         description: errorMessage,
@@ -133,32 +133,32 @@ function AIPanel({ workspace, onWorkspaceUpdate }: AIPanelProps) {
     setPatch(null)
     setPrompt('')
     
-    addToast({
+    toast({
       type: 'success',
       title: 'Değişiklikler uygulandı',
       description: `${patch.operations.length} işlem başarıyla tamamlandı`,
     })
-  }, [patch, workspace, onWorkspaceUpdate, addToast])
+  }, [patch, workspace, onWorkspaceUpdate, toast])
 
   const handleRejectPatch = useCallback(() => {
     setPatch(null)
-    addToast({
+    toast({
       type: 'info',
       title: 'Değişiklikler reddedildi',
     })
-  }, [addToast])
+  }, [toast])
 
   const handleUndo = useCallback(() => {
     if (previousWorkspace) {
       onWorkspaceUpdate(previousWorkspace)
       setPreviousWorkspace(null)
-      addToast({
+      toast({
         type: 'success',
         title: 'Geri alındı',
         description: 'Önceki duruma dönüldü',
       })
     }
-  }, [previousWorkspace, onWorkspaceUpdate, addToast])
+  }, [previousWorkspace, onWorkspaceUpdate, toast])
 
   const examplePrompts = [
     'Bir TODO listesi bileşeni ekle',

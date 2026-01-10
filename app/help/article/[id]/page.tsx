@@ -1,8 +1,8 @@
 'use client'
 
 import { useParams } from 'next/navigation'
-import { GlobalHeader } from '@/components/ui/GlobalHeader'
-import { BottomTabBar } from '@/components/ui/BottomTabBar'
+import { GlobalHeader } from '@/components/ui/global-header'
+import { BottomTabBar } from '@/components/ui/bottom-tab-bar'
 import HelpArticle from '@/components/help/HelpArticle'
 import { helpManager } from '@/lib/help'
 import { AlertCircle } from 'lucide-react'
@@ -74,6 +74,8 @@ export default function HelpArticlePage() {
     </div>
   )
 }
+
+
 
 
 

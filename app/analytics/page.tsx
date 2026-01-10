@@ -19,9 +19,9 @@ import {
   Award,
   Share2
 } from 'lucide-react'
-import { Button } from '@/components/ui/Button'
-import { Card } from '@/components/ui/Card'
-import { Badge } from '@/components/ui/Badge'
+import { Button } from '@/components/ui/button'
+import { Card } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
 import { analyticsManager, UsageData, ActivityData, ProjectData } from '@/lib/analytics'
 import { usePremium } from '@/lib/hooks/usePremium'
 import { useAgents } from '@/lib/hooks/useAgents'

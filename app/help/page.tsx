@@ -1,8 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import { GlobalHeader } from '@/components/ui/GlobalHeader'
-import { BottomTabBar } from '@/components/ui/BottomTabBar'
+import { GlobalHeader } from '@/components/ui/global-header'
+import { BottomTabBar } from '@/components/ui/bottom-tab-bar'
 import SmartSearch, { SearchSuggestions } from '@/components/help/SmartSearch'
 import SupportEscalation from '@/components/help/SupportEscalation'
 import { helpManager, HelpCategory, SearchResult } from '@/lib/help'

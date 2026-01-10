@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { Save, X, Brain } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { MemorySuggestion as MemorySuggestionType } from '@/lib/types'
-import { useToast } from '@/components/ui/Toast'
+import { useToast } from '@/components/ui/use-toast'
 
 interface MemorySuggestionProps {
   suggestion: MemorySuggestionType
@@ -20,19 +20,19 @@ export function MemorySuggestion({
   className 
 }: MemorySuggestionProps) {
   const [isProcessing, setIsProcessing] = useState(false)
-  const { addToast } = useToast()
+  const { toast } = useToast()
 
   const handleAccept = async () => {
     setIsProcessing(true)
     try {
       onAccept(suggestion.id)
-      addToast({
+      toast({
         type: 'success',
         title: 'Tercih kaydedildi! 💾',
         duration: 2000,
       })
     } catch (error) {
-      addToast({
+      toast({
         type: 'error',
         title: 'Tercih kaydedilemedi',
       })
