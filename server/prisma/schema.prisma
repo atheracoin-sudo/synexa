@@ -1,0 +1,66 @@
+// Prisma schema for Synexa Backend
+// Using SQLite for simplicity, with TODO for migration to Postgres in production
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  picture   String?
+  provider  String   // 'google' | 'local' | 'demo'
+  
+  // Account and credits
+  plan              String   @default("FREE") // 'FREE' | 'PRO_MONTHLY' | 'PRO_YEARLY'
+  credits           Int      @default(150)
+  dailyUsageChat    Int      @default(0)
+  dailyUsageImage   Int      @default(0)
+  dailyUsageVideo   Int      @default(0)
+  dailyUsageResetAt DateTime?
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  workspaces Workspace[]
+  chatMessages ChatMessage[]
+
+  @@map("users")
+}
+
+model Workspace {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name      String
+  icon      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  chatMessages ChatMessage[]
+
+  @@index([userId])
+  @@map("workspaces")
+}
+
+model ChatMessage {
+  id          String   @id @default(cuid())
+  workspaceId String
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role        String   // 'user' | 'assistant' | 'system'
+  content     String
+  createdAt   DateTime @default(now())
+
+  @@index([workspaceId, createdAt])
+  @@index([userId])
+  @@map("chat_messages")
+}
+

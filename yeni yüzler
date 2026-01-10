@@ -1,0 +1,375 @@
+Uygulamanın UI/UX tasarımını tamamen yenilemek istiyorum. Aşağıdaki maddeleri tek tek uygulayarak tasarımı daha modern, clean, premium ve “Chatbot AI: Türkçe Yapay Zeka (Newway Apps)” seviyesine çıkarmanı istiyorum.
+
+GENEL KURALLAR
+- Renk paleti: Mor/gradient (ChatGPT benzeri) + soft gri + beyaz arkaplan.
+- Tüm ekranlar SafeArea ile notch uyumlu olacak.
+- Tüm kartlar modern, shadow’lu ve radius’lu olacak.
+- Bileşenlerde consistent spacing kullan: 16 → 24 → 32 px.
+- Tasarım dili: Minimal, modern, ferah, AirBNB + OpenAI + NewwayApps karışımı.
+
+---------------------------------------------------------
+1) GLOBAL HEADER (TOP BAR)
+---------------------------------------------------------
+Tüm ekranlarda ortak kullanılacak bir Header bileşeni oluştur:
+
+- Header yüksekliği 70–80 px.
+- Sol: Geri butonu (sadece stack derinliği varsa görünsün).
+- Orta: Başlık (Chat, Create, Image Studio, Video Studio, Library, Profile).
+- Sağ: Ayarlar / info / üç nokta menü ikonları.
+- Arkaplan: Hafif blur + yarı transparan.
+- Tüm ekranlarda notch ile çakışma olmasın.
+
+-------------------
+2) BOTTOM TAB BAR
+-------------------
+- Modern, yuvarlak köşeli, hafif gölgeli tab bar tasarla.
+- Aktif tab → mor/gradient ikon + label.
+- Pasif tab → gri ikon.
+- Tab bar Apple/Google’ın modern tasarım önerilerine uygun olsun.
+- Animasyon ekle (scale + fade).
+
+Tabs:
+- Home
+- Chat
+- Create
+- Library
+- Profile
+
+---------------------------------------------------------
+3) HOME EKRANI YENİ TASARIM
+---------------------------------------------------------
+1) Selamlama kartı:
+- Üstte oval, gradient arkaplanlı bir karşılama kartı.
+- Avatar (harfli yuvarlak), “Good evening, User” şeklinde büyük tipografi.
+- Altında: “What will you create today?”
+
+2) Ana üç büyük kart:
+- Chat with Nova
+- Image Studio
+- Video Studio
+
+Her kart için:
+- Büyük ikon (AI head, Image icon, Video icon).
+- Gradient arkaplan.
+- Hafif shadow + radius.
+- Kart tıklandığında soft scale animasyonu.
+
+3) Recent Creations:
+- Modern galeri görünümü (Pinterest tarzı değil; clean grid).
+- Her kart: rounded, shadow, küçük icon overlay (image/video).
+- Placeholder görseller demo olarak güzel görünmeli.
+
+---------------------------------------------------------
+4) NOVA CHAT – TAM YENİ DİZAYN
+---------------------------------------------------------
+1) Mesaj balonları:
+- Assistant (Nova): Mor/gradient arkaplan + beyaz yazı.
+- User: Açık gri/beyaz arkaplan + koyu yazı.
+- Balon radius 18px, vertical spacing 12px.
+
+2) Chat alanı:
+- Soft fade-in animasyonları.
+- İlk mesaj “Hello, I’m Nova.” gibi modern karşılama.
+
+3) Input alanı:
+- iMessage tarzı modern input.
+- İç gölge (inner shadow) + dış shadow.
+- Gönder butonu: mor gradient + ikon.
+- Klavye açıldığında panel düzgün hareket etsin.
+
+4) Header:
+- Sol geri butonu gizli (root ekran).
+- Ortada: “Nova Chat”
+- Sağda: Ayarlar ikonu.
+
+---------------------------------------------------------
+5) IMAGE / VIDEO CREATE STUDIO
+---------------------------------------------------------
+Bu ekranlar NewwayApps tarzında, çok daha premium görünsün.
+
+1) Prompt Input:
+- Large rounded card.
+- İçinde placeholder “Describe your image…” temiz tipografi.
+- İkonlu bir prompt alanı.
+
+2) Stil seçici:
+- 4 adet segment/pill:
+  - Realistic
+  - Anime
+  - 3D
+  - Illustration
+- Seçili olan gradient, seçili olmayan gri arkaplan.
+
+3) “Generate” butonu:
+- Büyük, tam genişlik gradient buton.
+- Shadow + basınca scale animasyonu.
+- Loading animasyonu ekle.
+
+4) Çıktı alanı:
+- Ortalanmış, modern çerçeve içinde image/video preview.
+- Altında “Generated Image / Generated Video” etiketi.
+
+---------------------------------------------------------
+6) LİBRARY EKRANI
+---------------------------------------------------------
+1) Üstte sekmeler:
+- All / Images / Videos
+- Pill style segment control.
+- Seçili olan gradient.
+
+2) Grid:
+- İki sütun, modern kart tasarımı.
+- Kart içinde:
+  - Thumbnail
+  - Ikon overlay (fotoğraf/video).
+  - Alt açıklama ve tarih.
+
+3) Boş durum ekranı:
+- Soft illüstrasyon + “No creations yet.”
+
+---------------------------------------------------------
+7) PROFILE EKRANI
+---------------------------------------------------------
+1) Üstte büyük profile card:
+- Avatar daire
+- Username
+- Email (dummy olabilir)
+- Token bilgisi: “Credits: 150”
+
+2) Premium plan kartları:
+- Çok modern, gradient premium kart.
+- Ücretsiz plan vs Premium plan karşılaştırmalı tablo.
+
+3) Settings list:
+- Language
+- Notifications
+- Privacy Policy
+- Terms
+- Contact us
+
+---------------------------------------------------------
+8) ANİMASYONLAR
+---------------------------------------------------------
+- Ekran geçişlerinde soft fade/slide animasyonları.
+- Kartlara dokununca scale down animasyonu.
+- Generate sırasında loader animasyonu (Lottie de olabilir).
+
+---------------------------------------------------------
+9) TEMA VE TASARIM PAKETİ
+---------------------------------------------------------
+Bir theme.js oluştur:
+- Colors (primary, secondary, surface, background)
+- Shadows
+- Spacings
+- BorderRadius varsayılanları
+
+Tüm componentler temayı kullanacak.
+
+---------------------------------------------------------
+10) KOD İÇİ TEMİZLİK
+---------------------------------------------------------
+- Tüm inline style’ları kaldır.
+- Component-based styling’e geç.
+- Tekrarlayan UI parçalarını ayrı component haline getir:
+  - AIHeader
+  - AICard
+  - AIButton
+  - AIInput
+  - AISegment
+  - AIThumbnail
+  - AISpacer
+
+---------------------------------------------------------
+11) UYGULAMA DEMO MODUNDA KALSIN
+---------------------------------------------------------
+Şu anda AI gerçek değil.
+AI çağrıları aiService üzerinden demo şeklinde çalışmaya devam edecek.
+
+Kod içine yorum ekle:
+`// TODO: Gerçek OpenAI API entegrasyonu burada yapılacak.`
+
+---------------------------------------------------------
+
+İŞLEM TAMAMLANDIĞINDA:
+- Tüm ekranlar profesyonel ve modern olacak.
+- UI, NewwayApps kalitesinin üstüne çıkacak.
+- Uygulama tamamen DEMO çalışacak, API entegrasyonuna hazır olacak.
+
+
+
+
+
+
+Mevcut Nova AI uygulamasının arayüzünü tamamen yenilemek istiyorum. Şu anki tasarım çok template ve basit duruyor. Hedefim, "Chatbot AI: Türkçe Yapay Zeka – Newway Apps" uygulaması seviyesinde, modern ve premium görünen bir UI/UX’e geçmek.
+
+Aşağıdaki maddeleri adım adım uygula. İşlevselliği bozma, sadece görünüm ve düzeni değiştir. Kod yazarken mümkün olduğunca yeniden kullanılabilir component’ler tasarla.
+
+-------------------------------------------------
+1) GENEL TASARIM DİLİ ve TEMA
+-------------------------------------------------
+- Uygulamaya daha “AI / premium / modern” bir kimlik ver:
+  - Arkaplan: Tam beyaz yerine çok açık gri (#F4F5F7 gibi) veya very light gradient.
+  - Ana renkler: Mor + mavi + pembe gradient (Chatbot AI uygulamasına benzer ama birebir kopyalama).
+  - Font: Başlıklarda daha büyük ve kalın; alt yazılarda daha küçük ve sade.
+- Tüm kartlar:
+  - Daha yuvarlak köşeli (radius yüksek, 20–24 px).
+  - Daha güçlü ve yumuşak shadow.
+  - İç boşlukları (padding) daha ferah.
+- Genel his:
+  - Dolu ama karmaşık olmayan bir arayüz. “Boş template” hissi yerine “tasarlanmış ürün” hissi.
+
+-------------------------------------------------
+2) ÜST BAR (STATUS BAR ALANI + HEADER)
+-------------------------------------------------
+Şu an en üstteki bar çok boş ve işlevsiz duruyor. Bunu daha anlamlı ve şık hale getir:
+
+- Tüm ekranlarda:
+  - Status bar ile içerik arasında temiz bir ayrım olsun.
+  - Header alanı, uygulama kimliğini yansıtacak şekilde tasarlansın.
+- Header tasarımı:
+  - Orta kısımda sadece büyük, net bir başlık: “Home”, “Nova Chat”, “Image Studio”, “Library”, “Profile”.
+  - Geri butonu:
+    - Sadece stack içinde geri gidilebilen ekranlarda göster.
+    - Root tab ekranlarında geri oku gösterme.
+  - Sağ tarafta gerekirse:
+    - Chat: ayarlar ikonunu,
+    - Profile: profil düzenleme ikonunu göster.
+- Header arkaplanı:
+  - Hafif transparan veya açık gradient, altındaki içerikten ayrışsın.
+  - Chatbot AI benzeri modern ve sade bir top bar.
+
+-------------------------------------------------
+3) HOME EKRANI – RADİKAL İYİLEŞTİRME
+-------------------------------------------------
+Şu an Home ekranında kartlar fena değil ama çok “template” gibi. Hedef:
+
+1) Üst “Good morning, User” kartı:
+   - Ekranın genişliğini daha iyi kullan.
+   - Kartın içinde:
+     - Sol tarafta daha büyük avatar (yuvarlak, içinde harf).
+     - Sağ/orta tarafta:
+       - Büyük, kalın başlık: “Good morning, User”
+       - Altında daha küçük, soft text: “What will you create today?”
+     - Sağ tarafa ufak bir AI/astro/ışıltı ikon grubu eklenebilir.
+   - Kartın gradient’i daha güçlü ve modern olsun (mor → mavi → pembe geçiş).
+
+2) “What do you want to create today?” bölümü:
+   - Bu başlık ve altındaki kartları daha “özenli” yerleştir:
+     - Başlık daha büyük ve belki sol hizalı.
+     - Altındaki üç ana kart:
+       - Chat with Nova
+       - Image Studio
+       - Video Studio
+   - Kart tasarımı:
+     - İkonlar daha büyük ve modern (material icon yerine daha düz/flat/outline tarzı olabilir).
+     - Gradient’ler daha yumuşak ama canlı.
+     - Metinler kart içinde solda hizalı, iki satır iyi okunur açıklama.
+     - Kartlara hafif bir hover/tap animasyonu (scale, shadow) ekle.
+
+3) “Recent Creations”:
+   - Kartlar çok soluk ve boş görünüyorsa:
+     - Placeholder görselleri daha modern hale getir.
+     - Kartların üstüne image/video ikon overlay’i ekle.
+     - Altına daha anlamlı text: “AI Image”, “Short Video” vb.
+   - Boş olduğunda:
+     - Güzel bir illüstrasyon + “You have no creations yet” metni göster.
+
+-------------------------------------------------
+4) NOVA CHAT EKRANI
+-------------------------------------------------
+Chatbot AI uygulamasına benzer şekilde daha güçlü bir chat deneyimi istiyorum.
+
+- Mesaj balonları:
+  - Nova (assistant): Mor/mavi gradient arkaplan + beyaz yazı.
+  - Kullanıcı: Açık gri/beyaz kart + koyu yazı.
+  - Aralarında yeterli boşluk olsun, üst üste binmesin.
+- Mesaj listesi:
+  - Hafif padding’li, safe area’ya düzgün otursun.
+  - İlk karşılama mesajı daha “karakterli” olsun (Nova’nın kişiliği varmış gibi).
+- Mesaj yazma alanı:
+  - iMessage / WhatsApp havasında modern bir input bar.
+  - Gönder butonu:
+    - Yuvarlak veya kapsül şeklinde, gradient arkaplanlı, okunaklı ikonlu.
+    - Basıldığında hafif animasyon (scale/opacity).
+- Header:
+  - “Nova Chat” başlığı ortada.
+  - Sağ tarafta ayarlar dişlisi gibi bir ikon olabilir (ileride chat ayarları için).
+
+-------------------------------------------------
+5) IMAGE STUDIO / VIDEO STUDIO
+-------------------------------------------------
+Bu ekranlar da çok sade kalıyor, daha “studio” hissi vermeleri lazım.
+
+- Üstte sekme yapısı:
+  - “Image” ve “Video” tab’leri daha belirgin bir pill/segment control olarak tasarla.
+- Prompt alanı:
+  - Büyük, modern bir kart içinde olsun.
+  - Placeholder text: “Describe your image…” gibi.
+  - Sol tarafa küçük bir kalem veya sihirli değnek ikonu eklenebilir.
+- Stil butonları:
+  - Realistic / Anime / 3D / Illustration stil seçenekleri daha şık pill butonlar şeklinde.
+  - Seçili olan gradient/renkli, seçili olmayan sade/gri.
+- “Generate Image” butonu:
+  - Uygulamanın ana CTA butonu gibi görünsün:
+    - Tam genişlik,
+    - Gradient arka plan,
+    - Shadow,
+    - Büyük ikon + metin.
+- Sonuç alanı:
+  - Üretilen image/video için merkezi bir preview kartı.
+  - Demo modunda bile placeholder görsel/ikon şık olsun.
+
+-------------------------------------------------
+6) LIBRARY EKRANI
+-------------------------------------------------
+Library ekranı şu an çok gri ve sıradan. Burası da güçlü görünmeli.
+
+- Üst filtre:
+  - All / Images / Videos sekmelerini Chatbot AI’deki gibi modern segment/pill görünümüne getir.
+- Kart grid:
+  - Kartlar daha büyük, aralarında dengeli boşluk.
+  - Üstte thumbnail veya ikon, altında kısa başlık + tarih.
+- Boş hal:
+  - Güzel bir ilüstrasyon ve kısa açıklama ile “Henüz içerik yok” mesajı.
+
+-------------------------------------------------
+7) PROFILE EKRANI
+-------------------------------------------------
+Şu an profil ekranı fena değil ama hala template hissi var. Daha ürünleşmiş bir görünüm istiyorum.
+
+- Üst kart:
+  - Gradient daha yumuşak ama premium.
+  - Avatar + isim + mail + credits satırı:
+    - Daha dengeli hizala, yazılar çok sıkışık durmasın.
+    - “Credits: 150” rozeti daha küçük ama net bir badge olsun.
+- Plan kartı:
+  - “Free” plan kartı ve “Upgrade to Pro” butonu daha modern bir pricing card gibi.
+  - Altında madde madde özellikler: “Basic AI chat, Standard image quality” vb.
+- Settings listesi:
+  - Satırların arası rahat, ikonlar daha modern (outline/duotone).
+  - Liste tek bir büyük kart içinde olabilir (üstü yuvarlatılmış sheet gibi).
+
+-------------------------------------------------
+8) ANİMASYONLAR ve MİKRO-ETKİLEŞİMLER
+-------------------------------------------------
+- Tab değiştirirken küçük fade/slide animation.
+- Kartlara dokunduğunda hafif scale/opacity animasyonu.
+- Generate sırasında buton üzerinde loading state.
+- Chat scroll olurken performanslı ama yumuşak bir davranış.
+
+-------------------------------------------------
+9) KOD TEMİZLİĞİ / COMPONENTLEŞTİRME
+-------------------------------------------------
+- Inline stil kullanma, ortak componentler çıkar:
+  - AppHeader
+  - AppCard
+  - AppButton (primary, secondary, ghost varyantları)
+  - AppSegmentControl
+  - AppListItem
+- Renk, radius, shadow, spacing gibi değerleri theme/config dosyasına topla.
+- İşlevsel kısım (dummy AI, token vb.) bozulmasın. Yalnızca UI/UX değişsin.
+
+-------------------------------------------------
+10) GENEL NOT
+-------------------------------------------------
+Amaç: Tasarım kalitesini “Chatbot AI: Türkçe Yapay Zeka – Newway Apps” seviyesine çıkarmak. İlham alabilirsin ama 1:1 kopyalama yapma. Nova AI kendi özgün ama modern görünümüne sahip olsun.

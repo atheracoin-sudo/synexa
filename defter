@@ -1,0 +1,196 @@
+Uygulamanın UI/UX tasarımını tamamen yenilemek istiyorum. Aşağıdaki maddeleri tek tek uygulayarak tasarımı daha modern, clean, premium ve “Chatbot AI: Türkçe Yapay Zeka (Newway Apps)” seviyesine çıkarmanı istiyorum.
+
+GENEL KURALLAR
+- Renk paleti: Mor/gradient (ChatGPT benzeri) + soft gri + beyaz arkaplan.
+- Tüm ekranlar SafeArea ile notch uyumlu olacak.
+- Tüm kartlar modern, shadow’lu ve radius’lu olacak.
+- Bileşenlerde consistent spacing kullan: 16 → 24 → 32 px.
+- Tasarım dili: Minimal, modern, ferah, AirBNB + OpenAI + NewwayApps karışımı.
+
+---------------------------------------------------------
+1) GLOBAL HEADER (TOP BAR)
+---------------------------------------------------------
+Tüm ekranlarda ortak kullanılacak bir Header bileşeni oluştur:
+
+- Header yüksekliği 70–80 px.
+- Sol: Geri butonu (sadece stack derinliği varsa görünsün).
+- Orta: Başlık (Chat, Create, Image Studio, Video Studio, Library, Profile).
+- Sağ: Ayarlar / info / üç nokta menü ikonları.
+- Arkaplan: Hafif blur + yarı transparan.
+- Tüm ekranlarda notch ile çakışma olmasın.
+
+-------------------
+2) BOTTOM TAB BAR
+-------------------
+- Modern, yuvarlak köşeli, hafif gölgeli tab bar tasarla.
+- Aktif tab → mor/gradient ikon + label.
+- Pasif tab → gri ikon.
+- Tab bar Apple/Google’ın modern tasarım önerilerine uygun olsun.
+- Animasyon ekle (scale + fade).
+
+Tabs:
+- Home
+- Chat
+- Create
+- Library
+- Profile
+
+---------------------------------------------------------
+3) HOME EKRANI YENİ TASARIM
+---------------------------------------------------------
+1) Selamlama kartı:
+- Üstte oval, gradient arkaplanlı bir karşılama kartı.
+- Avatar (harfli yuvarlak), “Good evening, User” şeklinde büyük tipografi.
+- Altında: “What will you create today?”
+
+2) Ana üç büyük kart:
+- Chat with Nova
+- Image Studio
+- Video Studio
+
+Her kart için:
+- Büyük ikon (AI head, Image icon, Video icon).
+- Gradient arkaplan.
+- Hafif shadow + radius.
+- Kart tıklandığında soft scale animasyonu.
+
+3) Recent Creations:
+- Modern galeri görünümü (Pinterest tarzı değil; clean grid).
+- Her kart: rounded, shadow, küçük icon overlay (image/video).
+- Placeholder görseller demo olarak güzel görünmeli.
+
+---------------------------------------------------------
+4) NOVA CHAT – TAM YENİ DİZAYN
+---------------------------------------------------------
+1) Mesaj balonları:
+- Assistant (Nova): Mor/gradient arkaplan + beyaz yazı.
+- User: Açık gri/beyaz arkaplan + koyu yazı.
+- Balon radius 18px, vertical spacing 12px.
+
+2) Chat alanı:
+- Soft fade-in animasyonları.
+- İlk mesaj “Hello, I’m Nova.” gibi modern karşılama.
+
+3) Input alanı:
+- iMessage tarzı modern input.
+- İç gölge (inner shadow) + dış shadow.
+- Gönder butonu: mor gradient + ikon.
+- Klavye açıldığında panel düzgün hareket etsin.
+
+4) Header:
+- Sol geri butonu gizli (root ekran).
+- Ortada: “Nova Chat”
+- Sağda: Ayarlar ikonu.
+
+---------------------------------------------------------
+5) IMAGE / VIDEO CREATE STUDIO
+---------------------------------------------------------
+Bu ekranlar NewwayApps tarzında, çok daha premium görünsün.
+
+1) Prompt Input:
+- Large rounded card.
+- İçinde placeholder “Describe your image…” temiz tipografi.
+- İkonlu bir prompt alanı.
+
+2) Stil seçici:
+- 4 adet segment/pill:
+  - Realistic
+  - Anime
+  - 3D
+  - Illustration
+- Seçili olan gradient, seçili olmayan gri arkaplan.
+
+3) “Generate” butonu:
+- Büyük, tam genişlik gradient buton.
+- Shadow + basınca scale animasyonu.
+- Loading animasyonu ekle.
+
+4) Çıktı alanı:
+- Ortalanmış, modern çerçeve içinde image/video preview.
+- Altında “Generated Image / Generated Video” etiketi.
+
+---------------------------------------------------------
+6) LİBRARY EKRANI
+---------------------------------------------------------
+1) Üstte sekmeler:
+- All / Images / Videos
+- Pill style segment control.
+- Seçili olan gradient.
+
+2) Grid:
+- İki sütun, modern kart tasarımı.
+- Kart içinde:
+  - Thumbnail
+  - Ikon overlay (fotoğraf/video).
+  - Alt açıklama ve tarih.
+
+3) Boş durum ekranı:
+- Soft illüstrasyon + “No creations yet.”
+
+---------------------------------------------------------
+7) PROFILE EKRANI
+---------------------------------------------------------
+1) Üstte büyük profile card:
+- Avatar daire
+- Username
+- Email (dummy olabilir)
+- Token bilgisi: “Credits: 150”
+
+2) Premium plan kartları:
+- Çok modern, gradient premium kart.
+- Ücretsiz plan vs Premium plan karşılaştırmalı tablo.
+
+3) Settings list:
+- Language
+- Notifications
+- Privacy Policy
+- Terms
+- Contact us
+
+---------------------------------------------------------
+8) ANİMASYONLAR
+---------------------------------------------------------
+- Ekran geçişlerinde soft fade/slide animasyonları.
+- Kartlara dokununca scale down animasyonu.
+- Generate sırasında loader animasyonu (Lottie de olabilir).
+
+---------------------------------------------------------
+9) TEMA VE TASARIM PAKETİ
+---------------------------------------------------------
+Bir theme.js oluştur:
+- Colors (primary, secondary, surface, background)
+- Shadows
+- Spacings
+- BorderRadius varsayılanları
+
+Tüm componentler temayı kullanacak.
+
+---------------------------------------------------------
+10) KOD İÇİ TEMİZLİK
+---------------------------------------------------------
+- Tüm inline style’ları kaldır.
+- Component-based styling’e geç.
+- Tekrarlayan UI parçalarını ayrı component haline getir:
+  - AIHeader
+  - AICard
+  - AIButton
+  - AIInput
+  - AISegment
+  - AIThumbnail
+  - AISpacer
+
+---------------------------------------------------------
+11) UYGULAMA DEMO MODUNDA KALSIN
+---------------------------------------------------------
+Şu anda AI gerçek değil.
+AI çağrıları aiService üzerinden demo şeklinde çalışmaya devam edecek.
+
+Kod içine yorum ekle:
+`// TODO: Gerçek OpenAI API entegrasyonu burada yapılacak.`
+
+---------------------------------------------------------
+
+İŞLEM TAMAMLANDIĞINDA:
+- Tüm ekranlar profesyonel ve modern olacak.
+- UI, NewwayApps kalitesinin üstüne çıkacak.
+- Uygulama tamamen DEMO çalışacak, API entegrasyonuna hazır olacak.

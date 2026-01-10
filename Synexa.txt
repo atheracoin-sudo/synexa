@@ -1,0 +1,403 @@
+Uygulama adı: Nova AI (istersen sonra değiştiririz)
+
+Alt menü (bottom tab) 4 ana sekme:
+
+Home (Ana) – Öneriler, hızlı aksiyon butonları
+
+Chat – AI sohbet ekranı
+
+Create – Foto/Video oluşturma & düzenleme
+
+Library – Kullanıcının oluşturduğu medya
+
+Profile – Profil & abonelik
+
+2️⃣ Ekran listesi
+
+Splash Screen
+
+Onboarding Carousel
+
+Auth Screen (Login / Register toggled)
+
+Goal Selection (isteğe bağlı ama şık olur)
+
+Main Layout (Bottom Tab Navigator)
+
+Home Screen
+
+Chat Screen
+
+Create Screen
+
+Tab: Image
+
+Tab: Video
+
+Result Detail Screen (medya önizleme)
+
+Library Screen
+
+Profile & Settings Screen
+
+Subscription / Paywall Modal
+
+3️⃣ Her ekran için UX + Cursor prompt’u
+🟣 1) Splash Screen
+
+Amaç: Uygulama açıldığında markayı göstermek, sonra onboarding’e geçmek.
+
+Tasarım:
+
+Ortada logo / app adı: Nova AI
+
+Altta küçük tagline: “Your creative AI studio”
+
+Kısa fade-in animasyonu
+
+Cursor Prompt (React Native / Expo örnek):
+
+Create a React Native SplashScreen component called SplashScreen.tsx.
+
+Requirements:
+- Full-screen view with a dark gradient background.
+- Centered app name "Nova AI" with a bold, large font.
+- Subtext: "Your creative AI studio".
+- Small loading spinner below the text.
+- After 2 seconds, call a prop function `onFinish()` to navigate to the onboarding screen.
+- Use StyleSheet and flexbox for layout. Minimal, modern design.
+
+🟣 2) Onboarding Carousel
+
+Amaç: 3 slide ile uygulamanın gücünü anlat:
+
+AI Chat Asistan
+
+AI Foto Düzenleme / Üretim
+
+AI Video & Reels üretim
+
+Her slide:
+
+Üstte ikon / illüstrasyon
+
+Ortada başlık
+
+Altta açıklama
+
+En altta “Next / Skip / Get Started” butonları
+
+Cursor Prompt:
+
+Create an OnboardingScreen.tsx component with a 3-step horizontal swipeable carousel.
+
+Each slide should include:
+- An illustration placeholder (simple rounded rectangle).
+- Title text.
+- Description text.
+- Pagination dots at the bottom.
+- A primary button "Next" (or "Get Started" on the last slide).
+- A "Skip" text button in the top-right corner.
+
+Slides:
+1) Title: "Talk with Nova" - Description: "Smart AI chat for ideas, content and daily tasks."
+2) Title: "Create Stunning Images" - Description: "Generate and edit images with AI in seconds."
+3) Title: "AI-Powered Video" - Description: "Turn your ideas and photos into short videos."
+
+When the user finishes or skips, call a prop `onDone()` to go to AuthScreen.
+Design: clean, minimal, good spacing, safe area insets.
+
+🟣 3) Auth Screen (Login / Register)
+
+Amaç: Tek ekranda login/register arasında geçiş.
+
+Tasarım:
+
+Üstte logo + kısa metin
+
+Ortada tab switcher: “Login | Sign Up”
+
+Email, password alanları
+
+SignUp’ta ekstra “Name” alanı
+
+Altta ana CTA buton
+
+En altta “Continue with Google” (ileride bağlarsın)
+
+Cursor Prompt:
+
+Create an AuthScreen.tsx component with a tab-like switch for "Login" and "Sign Up".
+
+Layout:
+- Top: app name "Nova AI" and small subtitle.
+- Segmented control: "Login" | "Sign Up".
+- For Login: fields for Email, Password.
+- For Sign Up: fields for Name, Email, Password.
+- Primary button: "Continue".
+- Secondary button: "Continue with Google" (just placeholder onPress).
+- Show basic validation messages if fields are empty when pressing Continue.
+- At the bottom, a small text: "By continuing, you agree to our Terms & Privacy."
+
+Design: modern, rounded inputs, enough padding, scrollable if keyboard overlaps.
+
+🟣 4) Home Screen
+
+Amaç: Kullanıcıyı ana özelliklere yönlendiren “hub” ekran.
+
+Tasarım:
+
+Üstte: “Good evening, [Name]”
+
+Kart: “What do you want to create today?”
+
+Altında 3 büyük buton (card):
+
+“Chat with Nova” → Chat tab
+
+“Image Studio” → Create tab, Image
+
+“Video Studio” → Create tab, Video
+
+Alt kısım: “Recent Creations” horizontal scroll (küçük thumbnail kartları)
+
+Cursor Prompt:
+
+Create a HomeScreen.tsx component for the main tab.
+
+Layout:
+- Top: greeting text "Good evening, Name" and a small subtitle.
+- A big card: "What do you want to create today?" with 3 large buttons:
+  - "Chat with Nova"
+  - "Image Studio"
+  - "Video Studio"
+- Each button is a rounded card with icon placeholder and short caption.
+- Below, a "Recent Creations" section with a horizontal scroll list of rectangular thumbnails.
+- Each thumbnail shows: small image placeholder, type label (Image/Video), and date.
+
+The screen should be scrollable, use SafeAreaView, and look like a modern creative dashboard.
+
+🟣 5) Chat Screen
+
+Amaç: AI ile premium hisli chat.
+
+Tasarım:
+
+Üst bar: “Nova Chat”, sağda ayarlar ikonu
+
+Mesaj balonları: sağda kullanıcı, solda Nova
+
+Nova balonu hafif gradient, ikonlu
+
+Altta text input + send butonu + kısa “quick prompt” chip’leri (ör: “Write a caption”, “Brainstorm ideas”)
+
+Cursor Prompt:
+
+Create a ChatScreen.tsx component.
+
+Layout:
+- Header with title "Nova Chat" and a settings icon/button on the right.
+- Scrollable chat area with message bubbles:
+  - User messages aligned to the right, solid background.
+  - Nova messages aligned to the left, slightly gradient background, small Nova avatar icon.
+- At the bottom, a message input row:
+  - TextInput with placeholder "Ask Nova anything..."
+  - Send button icon.
+- Above the input, show 3 horizontal "quick prompt" chips:
+  - "Write a social media caption"
+  - "Brainstorm ideas"
+  - "Summarize my notes"
+
+Make sure the input area stays above the keyboard (use KeyboardAvoidingView).
+Style it like a modern messaging app.
+
+🟣 6) Create Screen (Image & Video tab’li)
+
+Amaç: Foto/video üretimi aynı ekranda, üstte tab.
+
+Tasarım:
+
+Üstte tab: Image | Video
+
+Image sekmesi:
+
+Prompt textarea (“Describe your image…”)
+
+Seçenekler: Style dropdown (Realistic / Anime / 3D / Illustration)
+
+“Generate” butonu
+
+Altta son üretilen görseller grid
+
+Video sekmesi:
+
+Prompt alanı
+
+Seçenekler: Length (15s, 30s), Format (Portrait / Square)
+
+“Generate video”
+
+Altta son videolar listesi
+
+Cursor Prompt:
+
+Create a CreateScreen.tsx component with two tabs: "Image" and "Video".
+
+For the Image tab:
+- Text area for prompt: placeholder "Describe your image..."
+- Dropdown or segmented control for style: "Realistic", "Anime", "3D", "Illustration".
+- Primary button "Generate Image".
+- Below, a grid (2 columns) showing recent generated images with placeholder thumbnails.
+
+For the Video tab:
+- Text area for prompt: placeholder "Describe your video..."
+- Options:
+  - Length selector: 15s, 30s.
+  - Format selector: Portrait, Square.
+- Primary button "Generate Video".
+- Below, a vertical list of recent videos with:
+  - Thumbnail placeholder
+  - Title
+  - Duration label.
+
+Use a clean tab switch at the top, keep paddings consistent, and design it as a creative studio panel.
+
+🟣 7) Result Detail Screen
+
+Amaç: Üretilen medya için detay sayfası.
+
+Tasarım:
+
+Üst: büyük medya (image/video player placeholder)
+
+Alt: butonlar → Download, Share, Duplicate Prompt, Save to Library
+
+Altında: Prompt metni + ayarlar
+
+En altta: “Create similar” butonu
+
+Cursor Prompt:
+
+Create a ResultDetailScreen.tsx component.
+
+Layout:
+- Full-width media preview at the top:
+  - If image: Image placeholder.
+  - If video: video player placeholder.
+- Below the media:
+  - Row of buttons: "Download", "Share", "Save to Library".
+- A card showing:
+  - "Prompt" label and the original prompt text.
+  - "Settings" label with style/length/format info.
+- At the bottom: a full-width button "Create Similar" that triggers a callback.
+
+Make it look like a polished detail screen in a creative app.
+
+🟣 8) Library Screen
+
+Amaç: Kullanıcının tüm medyası.
+
+Tasarım:
+
+Üstte filter: All | Images | Videos
+
+Grid: images için 2/3 kolon
+
+Video’larda küçük play ikonlu thumbnail
+
+Her item tıklanınca ResultDetail’e gider
+
+Cursor Prompt:
+
+Create a LibraryScreen.tsx component.
+
+Layout:
+- Top filter chips: "All", "Images", "Videos".
+- Below, a grid layout:
+  - Images: square thumbnails.
+  - Videos: same thumbnails but with a small play icon overlay.
+- Each item shows a small type badge (Image/Video) and a tiny date label overlay.
+- On press of an item, call a prop `onSelectItem(item)` to navigate to the detail screen.
+
+The screen should be scrollable and handle empty state with a nice message and a button "Create your first piece".
+
+🟣 9) Profile & Settings Screen
+
+Amaç: Kullanıcı bilgisi + abonelik + ayarlar.
+
+Tasarım:
+
+Üstte profil foto placeholder + isim + email
+
+Kart: Plan bilgisi (Free / Pro), “Upgrade to Pro” butonu
+
+Ayarlar listesi:
+
+Language
+
+Notifications
+
+Theme (Light/Dark/System)
+
+Terms / Privacy
+
+Logout
+
+Cursor Prompt:
+
+Create a ProfileScreen.tsx component.
+
+Layout:
+- Top profile section:
+  - Circular avatar placeholder.
+  - User name.
+  - Email.
+- Card showing subscription:
+  - Current plan (e.g., "Free" or "Pro").
+  - Benefits summary.
+  - Button "Upgrade to Pro" that opens a paywall modal.
+- Settings list with rows:
+  - Language
+  - Notifications
+  - Theme (Light / Dark / System).
+  - Terms of Service.
+  - Privacy Policy.
+- At the very bottom, a "Log out" text button.
+
+Use a modern card style, good spacing and separators for settings.
+
+🟣 10) Subscription / Paywall Modal
+
+Amaç: Pro plana geçirmeyi teşvik eden ekran.
+
+Tasarım:
+
+Başlık: “Go Pro with Nova”
+
+Bullet list:
+
+Faster AI
+
+HD images & videos
+
+Priority generation
+
+Fiyat kutusu: aylık / yıllık toggle
+
+CTA buton: “Start Pro now”
+
+Altında “Continue with Free plan” link
+
+Cursor Prompt:
+
+Create a PaywallModal.tsx component displayed as a centered modal.
+
+Content:
+- Title: "Go Pro with Nova".
+- Subtitle: "Unlock faster AI, HD images & videos, and priority generation."
+- A benefits list with 3 bullet points.
+- A toggle between "Monthly" and "Yearly" plans with prices (use placeholder prices).
+- Primary button: "Start Pro now".
+- Text button link: "Continue with free plan".
+
+The modal should dim the background, have rounded corners, and feel premium.
