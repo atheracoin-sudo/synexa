@@ -19,8 +19,8 @@ import {
   Share2
 } from 'lucide-react'
 import { achievementsManager, Achievement, AchievementCategory } from '@/lib/achievements'
-import { AchievementGridBadge } from '@/components/achievements/Badge'
-import AchievementUnlockModal from '@/components/achievements/AchievementUnlockModal'
+import { AchievementGridBadge } from '@/components/achievements/badge'
+import AchievementUnlockModal from '@/components/achievements/achievement-unlock-modal'
 
 const categoryIcons = {
   'all': Trophy,

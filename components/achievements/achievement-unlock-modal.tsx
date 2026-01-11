@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { X, Share2, ArrowRight, Sparkles } from 'lucide-react'
 import { Achievement } from '@/lib/achievements'
-import Badge from './Badge'
+import Badge from './badge'
 
 interface AchievementUnlockModalProps {
   achievement: Achievement | null

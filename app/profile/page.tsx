@@ -32,7 +32,7 @@ import { UsageSummary } from '@/components/premium/UsageSummary'
 import { PremiumBadge } from '@/components/premium/PremiumBadge'
 import { usePremium } from '@/lib/hooks/usePremium'
 import { achievementsManager } from '@/lib/achievements'
-import { ProfileBadge, BadgeCollection } from '@/components/achievements/Badge'
+import { ProfileBadge, BadgeCollection } from '@/components/achievements/badge'
 import { onboardingManager } from '@/lib/onboarding'
 
 const settingsItems = [
