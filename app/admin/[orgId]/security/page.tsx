@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter, useParams } from 'next/navigation'
 import { BottomTabBar } from '@/components/ui/bottom-tab-bar'
-import { OrganizationSwitcher } from '@/components/enterprise/OrganizationSwitcher'
+import { OrganizationSwitcher } from '@/components/enterprise/organization-switcher'
 import { enterpriseManager, type Organization, type SSOProvider } from '@/lib/enterprise'
 import { 
   Shield,

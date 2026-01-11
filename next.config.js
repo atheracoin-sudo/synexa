@@ -1,5 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
+    // Add '@' alias to ensure it resolves correctly on all platforms (including Vercel Linux)
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      '@': require('path').resolve(__dirname)
+    }
+    return config
+  },
   async headers() {
     return [
       {
