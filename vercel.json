@@ -4,7 +4,6 @@
   "framework": "nextjs",
   "installCommand": "npm ci",
   "devCommand": "npm run dev",
-  "rootDirectory": ".",
   "env": {
     "NODE_ENV": "production"
   },
