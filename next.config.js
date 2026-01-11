@@ -2,9 +2,13 @@
 const nextConfig = {
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
     // Add '@' alias to ensure it resolves correctly on all platforms (including Vercel Linux)
+    const path = require('path')
     config.resolve.alias = {
       ...config.resolve.alias,
-      '@': require('path').resolve(__dirname)
+      '@': path.resolve(__dirname),
+      '@/components': path.resolve(__dirname, 'components'),
+      '@/lib': path.resolve(__dirname, 'lib'),
+      '@/app': path.resolve(__dirname, 'app')
     }
     return config
   },
