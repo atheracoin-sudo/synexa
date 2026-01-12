@@ -1,3 +1,5 @@
+import { safeLocalStorage } from './utils/safe-storage'
+
 export type AchievementCategory = 'chat' | 'code' | 'image' | 'agents' | 'team' | 'general'
 
 export type AchievementTier = 'bronze' | 'silver' | 'gold' | 'platinum'
@@ -313,7 +315,7 @@ export class AchievementsManager {
   // Get user progress
   getUserProgress(userId: string): UserProgress {
     try {
-      const stored = localStorage.getItem(`synexa_achievements_${userId}`)
+      const stored = safeLocalStorage.getItem(`synexa_achievements_${userId}`)
       if (stored) {
         return JSON.parse(stored)
       }
@@ -342,7 +344,7 @@ export class AchievementsManager {
   // Save user progress
   saveUserProgress(progress: UserProgress): void {
     try {
-      localStorage.setItem(`synexa_achievements_${progress.userId}`, JSON.stringify(progress))
+      safeLocalStorage.setItem(`synexa_achievements_${progress.userId}`, JSON.stringify(progress))
     } catch (error) {
       console.error('Error saving user progress:', error)
     }

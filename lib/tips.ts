@@ -1,3 +1,5 @@
+import { safeLocalStorage } from './utils/safe-storage'
+
 export type TipType = 'tooltip' | 'inline' | 'coaching'
 
 export type TipContext = 'chat' | 'code' | 'image' | 'home' | 'profile' | 'goals' | 'analytics' | 'general'
@@ -332,7 +334,7 @@ export class TipsManager {
   // Get tip state
   getTipState(tipId: string, userId: string): TipState {
     try {
-      const stored = localStorage.getItem(`synexa_tip_state_${userId}_${tipId}`)
+      const stored = safeLocalStorage.getItem(`synexa_tip_state_${userId}_${tipId}`)
       if (stored) {
         return JSON.parse(stored)
       }
@@ -352,7 +354,7 @@ export class TipsManager {
   // Save tip state
   saveTipState(tipId: string, userId: string, state: TipState): void {
     try {
-      localStorage.setItem(`synexa_tip_state_${userId}_${tipId}`, JSON.stringify(state))
+      safeLocalStorage.setItem(`synexa_tip_state_${userId}_${tipId}`, JSON.stringify(state))
     } catch (error) {
       console.error('Error saving tip state:', error)
     }
@@ -361,7 +363,7 @@ export class TipsManager {
   // Get tips settings
   getTipsSettings(userId: string): TipsSettings {
     try {
-      const stored = localStorage.getItem(`synexa_tips_settings_${userId}`)
+      const stored = safeLocalStorage.getItem(`synexa_tips_settings_${userId}`)
       if (stored) {
         return JSON.parse(stored)
       }
@@ -381,7 +383,7 @@ export class TipsManager {
   // Save tips settings
   saveTipsSettings(userId: string, settings: TipsSettings): void {
     try {
-      localStorage.setItem(`synexa_tips_settings_${userId}`, JSON.stringify(settings))
+      safeLocalStorage.setItem(`synexa_tips_settings_${userId}`, JSON.stringify(settings))
     } catch (error) {
       console.error('Error saving tips settings:', error)
     }
@@ -498,7 +500,7 @@ export class TipsManager {
   resetAllTips(userId: string): void {
     const allTips = this.getAllTips()
     allTips.forEach(tip => {
-      localStorage.removeItem(`synexa_tip_state_${userId}_${tip.id}`)
+      safeLocalStorage.removeItem(`synexa_tip_state_${userId}_${tip.id}`)
     })
   }
 

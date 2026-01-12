@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { ArrowLeft, CreditCard, Shield, Check, Apple, Smartphone, Share2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -11,8 +11,9 @@ import { Badge } from '@/components/ui/badge'
 import { Slider } from '@/components/ui/slider'
 import { pricingManager } from '@/lib/pricing'
 import { cn } from '@/lib/utils'
+import { safeLocalStorage } from '@/lib/utils/safe-storage'
 
-export default function CheckoutPage() {
+function CheckoutContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   
@@ -103,9 +104,9 @@ export default function CheckoutPage() {
       
       if (success) {
         // Update user's premium status
-        localStorage.setItem('synexa_user_premium', 'true')
-        localStorage.setItem('synexa_user_plan', plan?.id || 'premium')
-        localStorage.setItem('synexa_subscription_date', new Date().toISOString())
+        safeLocalStorage.setItem('synexa_user_premium', 'true')
+        safeLocalStorage.setItem('synexa_user_plan', plan?.id || 'premium')
+        safeLocalStorage.setItem('synexa_subscription_date', new Date().toISOString())
         
         setShowSuccess(true)
       } else {
@@ -489,5 +490,22 @@ export default function CheckoutPage() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function CheckoutPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 dark:from-purple-950 dark:to-blue-950 p-4">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center py-12">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600 mx-auto"></div>
+            <p className="mt-4 text-muted-foreground">Loading checkout...</p>
+          </div>
+        </div>
+      </div>
+    }>
+      <CheckoutContent />
+    </Suspense>
   )
 }

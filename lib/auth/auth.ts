@@ -3,6 +3,7 @@
  */
 
 import { apiClient } from '@/lib/api/client'
+import { safeLocalStorage } from '../utils/safe-storage'
 
 export interface AuthUser {
   id: string
@@ -57,7 +58,7 @@ export async function initializeAuth(): Promise<void> {
   
   try {
     // Check if we have a token
-    const token = localStorage.getItem('synexa_auth_token')
+    const token = safeLocalStorage.getItem('synexa_auth_token')
     if (!token) {
       updateAuthState({ 
         isAuthenticated: false, 
@@ -109,7 +110,7 @@ export async function login(email?: string): Promise<{ success: boolean; error?:
     }
     
     // Store demo token
-    localStorage.setItem('synexa_auth_token', 'demo-token-' + Date.now())
+    safeLocalStorage.setItem('synexa_auth_token', 'demo-token-' + Date.now())
     
     updateAuthState({
       isAuthenticated: true,
@@ -150,17 +151,17 @@ export function getCurrentUser(): AuthUser | null {
 // Token management functions (for testing)
 export function getAuthToken(): string | null {
   if (typeof window === 'undefined') return null
-  return localStorage.getItem('auth_token')
+  return safeLocalStorage.getItem('auth_token')
 }
 
 export function setAuthToken(token: string): void {
   if (typeof window === 'undefined') return
-  localStorage.setItem('auth_token', token)
+  safeLocalStorage.setItem('auth_token', token)
 }
 
 export function clearAuthToken(): void {
   if (typeof window === 'undefined') return
-  localStorage.removeItem('auth_token')
+  safeLocalStorage.removeItem('auth_token')
 }
 
 // Auto-initialize on client side

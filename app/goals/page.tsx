@@ -1,5 +1,8 @@
 'use client'
 
+// Force dynamic rendering since this page depends on localStorage
+export const dynamic = 'force-dynamic'
+
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { Target, Plus, Filter, ArrowLeft, Trophy, Flame, Crown } from 'lucide-react'

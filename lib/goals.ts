@@ -2,6 +2,8 @@ export type GoalType = 'chat_daily' | 'chat_weekly' | 'code_weekly' | 'code_mont
 
 export type GoalPeriod = 'daily' | 'weekly' | 'monthly'
 
+import { safeLocalStorage } from './utils/safe-storage'
+
 export type GoalStatus = 'active' | 'completed' | 'paused' | 'failed'
 
 export interface Goal {
@@ -132,7 +134,7 @@ export class GoalManager {
 
   // Get user's goals
   getUserGoals(userId: string): Goal[] {
-    const stored = localStorage.getItem(`synexa_goals_${userId}`)
+    const stored = safeLocalStorage.getItem(`synexa_goals_${userId}`)
     if (stored) {
       return JSON.parse(stored)
     }
@@ -177,7 +179,7 @@ export class GoalManager {
 
   // Save user's goals
   saveUserGoals(userId: string, goals: Goal[]): void {
-    localStorage.setItem(`synexa_goals_${userId}`, JSON.stringify(goals))
+    safeLocalStorage.setItem(`synexa_goals_${userId}`, JSON.stringify(goals))
   }
 
   // Create new goal
@@ -250,7 +252,7 @@ export class GoalManager {
 
   // Get user's streaks
   getUserStreaks(userId: string): Streak[] {
-    const stored = localStorage.getItem(`synexa_streaks_${userId}`)
+    const stored = safeLocalStorage.getItem(`synexa_streaks_${userId}`)
     if (stored) {
       return JSON.parse(stored)
     }
@@ -292,7 +294,7 @@ export class GoalManager {
 
   // Save user's streaks
   saveUserStreaks(userId: string, streaks: Streak[]): void {
-    localStorage.setItem(`synexa_streaks_${userId}`, JSON.stringify(streaks))
+    safeLocalStorage.setItem(`synexa_streaks_${userId}`, JSON.stringify(streaks))
   }
 
   // Update streak
@@ -415,20 +417,20 @@ export class GoalManager {
   // Check if goal should show completion celebration
   shouldShowCompletion(userId: string, goalId: string): boolean {
     const key = `synexa_goal_completion_shown_${userId}_${goalId}`
-    return !localStorage.getItem(key)
+    return !safeLocalStorage.getItem(key)
   }
 
   // Mark goal completion as shown
   markCompletionShown(userId: string, goalId: string): void {
     const key = `synexa_goal_completion_shown_${userId}_${goalId}`
-    localStorage.setItem(key, 'true')
+    safeLocalStorage.setItem(key, 'true')
   }
 
   // Get smart goal suggestions based on user activity
   getSmartGoalSuggestions(userId: string): GoalTemplate[] {
     try {
       // Get user's analytics data
-      const analytics = JSON.parse(localStorage.getItem(`synexa_analytics_${userId}`) || '{}')
+      const analytics = JSON.parse(safeLocalStorage.getItem(`synexa_analytics_${userId}`) || '{}')
       const usageMetrics = analytics.usageMetrics || {}
       
       const suggestions: GoalTemplate[] = []
