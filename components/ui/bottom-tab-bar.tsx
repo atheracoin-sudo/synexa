@@ -80,6 +80,7 @@ export function BottomTabBar({ className }: BottomTabBarProps) {
     // Handle studio routes
     if (pathname.startsWith('/chat')) return 'chat'
     if (pathname.startsWith('/code') || pathname.startsWith('/design')) return 'create'
+    if (pathname.startsWith('/marketplace')) return 'marketplace'
     if (pathname.startsWith('/library')) return 'library'
     if (pathname.startsWith('/profile')) return 'profile'
     return 'home'
@@ -196,6 +197,7 @@ export function useActiveTab() {
   const getActiveTab = () => {
     if (pathname.startsWith('/chat')) return tabs.find(t => t.id === 'chat')
     if (pathname.startsWith('/code') || pathname.startsWith('/design')) return tabs.find(t => t.id === 'create')
+    if (pathname.startsWith('/marketplace')) return tabs.find(t => t.id === 'marketplace')
     if (pathname.startsWith('/library')) return tabs.find(t => t.id === 'library')
     if (pathname.startsWith('/profile')) return tabs.find(t => t.id === 'profile')
     return tabs.find(t => t.id === 'home')

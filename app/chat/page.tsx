@@ -330,7 +330,7 @@ export default function ChatPage() {
         </div>
 
         {/* Input Area - Fixed at bottom with safe area */}
-        <div className="sticky bottom-0 border-t border-border bg-background/80 backdrop-blur-md p-4 pb-safe-area-inset-bottom">
+        <div className="sticky bottom-0 border-t border-border bg-background/80 backdrop-blur-md p-4 pb-safe-area-inset-bottom z-40">
           <div className="max-w-4xl mx-auto">
             <div className="flex gap-3 items-end">
               <div className="flex-1 relative">
