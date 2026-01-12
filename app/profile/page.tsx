@@ -28,7 +28,7 @@ import {
   Code2
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { GlobalHeader, BottomTabBar } from '@/components/ui'
+import { GlobalHeader } from '@/components/ui'
 import { UsageSummaryCard } from '@/components/usage/UsageSummaryCard'
 import { FeedbackModal } from '@/components/beta/FeedbackModal'
 import { UsageSummary } from '@/components/premium/UsageSummary'
@@ -514,9 +514,6 @@ export default function ProfilePage() {
           </div>
         </div>
       )}
-
-      {/* Bottom Tab Bar */}
-      <BottomTabBar />
 
       {/* Feedback Modal */}
       <FeedbackModal 

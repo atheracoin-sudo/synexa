@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { ArrowLeft, Brain, Plus, Trash2, ToggleLeft, ToggleRight, Edit3 } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { GlobalHeader, BottomTabBar } from '@/components/ui'
+import { GlobalHeader } from '@/components/ui'
 import { useMemory } from '@/lib/hooks/useMemory'
 import { usePremium } from '@/lib/hooks/usePremium'
 import { MemoryCategory, MemoryItem } from '@/lib/types'
@@ -360,8 +360,6 @@ export default function AIPreferencesPage() {
         </div>
       </main>
 
-      {/* Bottom Tab Bar */}
-      <BottomTabBar />
     </div>
   )
 }

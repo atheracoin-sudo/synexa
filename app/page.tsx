@@ -21,7 +21,6 @@ import {
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { GlobalHeader } from '@/components/ui/global-header'
-import { BottomTabBar } from '@/components/ui/bottom-tab-bar'
 import { analyticsManager } from '@/lib/analytics'
 import { MainStreakCard } from '@/components/goals/StreakDisplay'
 import { CompactGoalCard } from '@/components/goals/GoalProgressCard'
@@ -653,8 +652,6 @@ export default function HomePage() {
         </div>
       </main>
 
-      {/* Bottom Tab Bar */}
-      <BottomTabBar />
 
 
       {/* Goal Creation Modal */}

@@ -1,3 +1,5 @@
+import { safeLocalStorage } from './utils/safe-storage'
+
 export type UserRole = 'developer' | 'designer' | 'founder' | 'student' | 'chat_user'
 
 export type ExperienceLevel = 'beginner' | 'intermediate' | 'advanced'
@@ -255,7 +257,7 @@ export class OnboardingManager {
   // Get user onboarding data
   getUserOnboardingData(userId: string): OnboardingData | null {
     try {
-      const stored = localStorage.getItem(`synexa_onboarding_${userId}`)
+      const stored = safeLocalStorage.getItem(`synexa_onboarding_${userId}`)
       if (stored) {
         return JSON.parse(stored)
       }
@@ -268,7 +270,7 @@ export class OnboardingManager {
   // Save user onboarding data
   saveUserOnboardingData(data: OnboardingData): void {
     try {
-      localStorage.setItem(`synexa_onboarding_${data.userId}`, JSON.stringify(data))
+      safeLocalStorage.setItem(`synexa_onboarding_${data.userId}`, JSON.stringify(data))
     } catch (error) {
       console.error('Error saving onboarding data:', error)
     }
@@ -353,7 +355,7 @@ export class OnboardingManager {
   // Reset onboarding
   resetOnboarding(userId: string): void {
     try {
-      localStorage.removeItem(`synexa_onboarding_${userId}`)
+      safeLocalStorage.removeItem(`synexa_onboarding_${userId}`)
     } catch (error) {
       console.error('Error resetting onboarding:', error)
     }
