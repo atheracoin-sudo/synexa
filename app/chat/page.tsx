@@ -3,8 +3,8 @@
 import { useState, useEffect, useRef } from 'react'
 import { Send, Plus, MessageSquare, Search } from 'lucide-react'
 import { GlobalHeader } from '@/components/ui/global-header'
-import { BottomTabBar } from '@/components/ui/bottom-tab-bar'
 import { ChatMessage } from '@/components/chat/ChatMessage'
+import { ConversationSidebar } from '@/components/chat/ConversationSidebar'
 import { LoadingSpinner, EmptyState } from '@/components/ui/loading-states'
 import { cn } from '@/lib/utils'
 import { toast } from '@/components/ui/use-toast'
@@ -27,6 +27,8 @@ export default function ChatPage() {
   const [streamingContent, setStreamingContent] = useState('')
   const [showSidebar, setShowSidebar] = useState(false)
   const [showLimitModal, setShowLimitModal] = useState(false)
+  const [lastFailedMessage, setLastFailedMessage] = useState<string>('')
+  const [retryCount, setRetryCount] = useState(0)
   
   // Refs
   const messagesEndRef = useRef<HTMLDivElement>(null)
@@ -136,17 +138,52 @@ export default function ChatPage() {
           setStreamingContent('')
         }
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Chat error:', error)
+      setLastFailedMessage(userMessage)
+      
+      // Determine error message based on error type
+      let errorMessage = 'Failed to send message. Please try again.'
+      let showRetry = true
+      
+      if (error?.message?.includes('network') || error?.code === 'NETWORK_ERROR') {
+        errorMessage = 'Network error. Check your connection and try again.'
+      } else if (error?.code === 'RATE_LIMITED') {
+        errorMessage = 'Too many requests. Please wait a moment and try again.'
+        showRetry = false
+      } else if (error?.code === 'SERVICE_UNAVAILABLE') {
+        errorMessage = 'AI service is temporarily unavailable. Please try again later.'
+      }
+      
       toast({
-        title: 'Error',
-        description: 'Failed to send message. Please try again.',
-        variant: 'destructive'
+        title: 'Message Failed',
+        description: errorMessage,
+        variant: 'destructive',
+        action: showRetry ? (
+          <button
+            onClick={() => handleRetryMessage()}
+            className="px-3 py-1 bg-primary text-primary-foreground rounded text-sm hover:bg-primary/90"
+          >
+            Retry
+          </button>
+        ) : undefined
       })
     } finally {
       setIsLoading(false)
       setIsStreaming(false)
     }
+  }
+
+  const handleRetryMessage = async () => {
+    if (!lastFailedMessage || retryCount >= 3) return
+    
+    setMessage(lastFailedMessage)
+    setRetryCount(prev => prev + 1)
+    
+    // Wait a bit before retrying
+    setTimeout(() => {
+      handleSendMessage()
+    }, 1000)
   }
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -166,60 +203,42 @@ export default function ChatPage() {
     setShowSidebar(false)
   }
 
+  const handleDeleteConversation = (conversationId: string) => {
+    setConversations(prev => prev.filter(c => c.id !== conversationId))
+    if (activeConversation?.id === conversationId) {
+      setActiveConversation(null)
+    }
+  }
+
+  const handleRenameConversation = (conversationId: string, newTitle: string) => {
+    setConversations(prev => 
+      prev.map(c => 
+        c.id === conversationId 
+          ? { ...c, title: newTitle, updatedAt: new Date().toISOString() }
+          : c
+      )
+    )
+    if (activeConversation?.id === conversationId) {
+      setActiveConversation(prev => prev ? { ...prev, title: newTitle } : null)
+    }
+  }
+
   return (
     <div className="min-h-screen bg-background flex">
       {/* Sidebar - Mobile Hidden by Default */}
       <div className={cn(
-        'w-80 bg-card border-r border-border flex-col transition-all duration-200 hidden md:flex',
-        showSidebar && 'flex'
+        'w-80 transition-all duration-200 hidden md:block',
+        showSidebar && 'block'
       )}>
-        {/* Sidebar Header */}
-        <div className="p-4 border-b border-border">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-foreground">Conversations</h2>
-            <button
-              onClick={handleNewConversation}
-              className="p-2 hover:bg-muted rounded-lg transition-colors"
-            >
-              <Plus className="w-4 h-4" />
-            </button>
-          </div>
-        </div>
-
-        {/* Conversations List */}
-        <div className="flex-1 overflow-y-auto">
-          {conversations.length === 0 ? (
-            <div className="p-4 text-center text-muted-foreground">
-              <MessageSquare className="w-8 h-8 mx-auto mb-2 opacity-50" />
-              <p className="text-sm">No conversations yet</p>
-            </div>
-          ) : (
-            <div className="p-2">
-              {conversations.map((conversation) => (
-                <div
-                  key={conversation.id}
-                  onClick={() => handleSelectConversation(conversation)}
-                  className={cn(
-                    'p-3 rounded-lg cursor-pointer transition-colors',
-                    activeConversation?.id === conversation.id
-                      ? 'bg-primary/10 border border-primary/20'
-                      : 'hover:bg-muted'
-                  )}
-                >
-                  <h3 className="font-medium text-sm text-foreground truncate">
-                    {conversation.title}
-                  </h3>
-                  <p className="text-xs text-muted-foreground mt-1 line-clamp-2">
-                    {conversation.messages[conversation.messages.length - 1]?.content}
-                  </p>
-                  <p className="text-xs text-muted-foreground mt-1">
-                    {new Date(conversation.updatedAt).toLocaleDateString()}
-                  </p>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
+        <ConversationSidebar
+          conversations={conversations}
+          activeConversation={activeConversation}
+          onSelectConversation={handleSelectConversation}
+          onNewConversation={handleNewConversation}
+          onDeleteConversation={handleDeleteConversation}
+          onRenameConversation={handleRenameConversation}
+          className="h-full"
+        />
       </div>
 
       {/* Main Chat Area */}
@@ -310,8 +329,8 @@ export default function ChatPage() {
           )}
         </div>
 
-        {/* Input Area */}
-        <div className="border-t border-border p-4">
+        {/* Input Area - Fixed at bottom with safe area */}
+        <div className="sticky bottom-0 border-t border-border bg-background/80 backdrop-blur-md p-4 pb-safe-area-inset-bottom">
           <div className="max-w-4xl mx-auto">
             <div className="flex gap-3 items-end">
               <div className="flex-1 relative">
@@ -362,9 +381,6 @@ export default function ChatPage() {
           </div>
         </div>
       </div>
-
-      {/* Bottom Tab Bar */}
-      <BottomTabBar />
 
       {/* Limit Reached Modal */}
       <LimitReachedModal

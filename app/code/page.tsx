@@ -16,7 +16,8 @@ import {
   Rocket
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { GlobalHeader, BottomTabBar } from '@/components/ui'
+import { toast } from '@/components/ui/use-toast'
+import { GlobalHeader } from '@/components/ui'
 import { CodeEmptyState } from '@/components/empty-states/CodeEmptyState'
 import { CodeContextualHelp } from '@/components/help/ContextualHelp'
 import { PromptEnhancer } from '@/components/prompt/PromptEnhancer'
@@ -26,6 +27,7 @@ import { Crown } from 'lucide-react'
 import { AddToPortfolioButton } from '@/components/portfolio/AddToPortfolioButton'
 import { useOnboarding } from '@/lib/hooks/useOnboarding'
 import { usePremium } from '@/lib/hooks/usePremium'
+import { codeSessionManager, CodeSession, CodeSpec } from '@/lib/code-session'
 
 const codeTemplates = [
   {
@@ -100,6 +102,10 @@ export default function CodeStudioPage() {
   const [generatedCode, setGeneratedCode] = useState('')
   const [activeMode, setActiveMode] = useState<'help' | 'builder'>('help')
   const [showUpgradeModal, setShowUpgradeModal] = useState(false)
+  const [currentSession, setCurrentSession] = useState<CodeSession | null>(null)
+  const [isGeneratingSpec, setIsGeneratingSpec] = useState(false)
+  const [isGeneratingCode, setIsGeneratingCode] = useState(false)
+  const [generatedSpec, setGeneratedSpec] = useState<CodeSpec | null>(null)
   const { onboardingData } = useOnboarding()
   const { canPerformAction, incrementUsage } = usePremium()
 
@@ -138,6 +144,73 @@ export default function CodeStudioPage() {
     { id: 'nodejs', name: 'Node.js', icon: '🟢' },
     { id: 'sql', name: 'SQL', icon: '🗄️' },
   ]
+
+  const handleCreateSession = async () => {
+    if (!prompt.trim()) return
+
+    // Check if user can perform this action
+    if (!canPerformAction('codeProjects')) {
+      setShowUpgradeModal(true)
+      return
+    }
+
+    try {
+      setIsGeneratingSpec(true)
+      
+      // Create new session
+      const session = codeSessionManager.createSession(prompt)
+      setCurrentSession(session)
+      
+      // Generate spec from prompt
+      const spec = await codeSessionManager.generateSpec(prompt)
+      setGeneratedSpec(spec)
+      
+      // Switch to builder mode
+      setActiveMode('builder')
+      
+      toast({
+        title: 'Project Created!',
+        description: 'Your app specification has been generated'
+      })
+    } catch (error) {
+      toast({
+        title: 'Generation Failed',
+        description: 'Failed to create project. Please try again.',
+        variant: 'destructive'
+      })
+    } finally {
+      setIsGeneratingSpec(false)
+    }
+  }
+
+  const handleGenerateCode = async () => {
+    if (!currentSession || !generatedSpec) return
+
+    try {
+      setIsGeneratingCode(true)
+      
+      // Generate code from spec
+      const updatedSession = await codeSessionManager.generateCode(currentSession, generatedSpec)
+      setCurrentSession(updatedSession)
+      setGeneratedCode(updatedSession.generatedCode)
+      
+      // Increment usage
+      incrementUsage('codeProjects')
+      
+      toast({
+        title: 'Code Generated!',
+        description: 'Your app code is ready for preview'
+      })
+    } catch (error) {
+      toast({
+        title: 'Generation Failed',
+        description: 'Failed to generate code. Please try again.',
+        variant: 'destructive'
+      })
+    } finally {
+      setIsGeneratingCode(false)
+    }
+  }
 
   const handleGenerate = async () => {
     if (!prompt.trim()) return
@@ -625,9 +698,6 @@ ${prompt.toLowerCase().replace(/\s+/g, '')}();`
           </div>
         </div>
       </main>
-
-      {/* Bottom Tab Bar */}
-      <BottomTabBar />
 
       {/* Contextual Help */}
       <CodeContextualHelp />

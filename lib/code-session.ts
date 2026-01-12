@@ -1,0 +1,273 @@
+import { safeLocalStorage } from './utils/safe-storage'
+
+export interface CodeSession {
+  id: string
+  title: string
+  prompt: string
+  spec: string
+  generatedCode: string
+  preview: {
+    type: 'web' | 'mobile'
+    screens: CodeScreen[]
+    assets: string[]
+  }
+  createdAt: string
+  updatedAt: string
+}
+
+export interface CodeScreen {
+  id: string
+  name: string
+  type: 'page' | 'component' | 'layout'
+  code: string
+  preview: string // Base64 image or HTML
+  dependencies: string[]
+}
+
+export interface CodeSpec {
+  title: string
+  description: string
+  features: string[]
+  techStack: string[]
+  pages: {
+    name: string
+    description: string
+    components: string[]
+  }[]
+  styling: {
+    framework: 'tailwind' | 'css' | 'styled-components'
+    theme: 'light' | 'dark' | 'auto'
+    colors: string[]
+  }
+}
+
+class CodeSessionManager {
+  private sessions: CodeSession[] = []
+  private currentSession: CodeSession | null = null
+
+  constructor() {
+    this.loadSessions()
+  }
+
+  private loadSessions(): void {
+    try {
+      const stored = safeLocalStorage.getItem('synexa_code_sessions')
+      if (stored) {
+        this.sessions = JSON.parse(stored)
+      }
+    } catch (error) {
+      console.error('Failed to load code sessions:', error)
+      this.sessions = []
+    }
+  }
+
+  private saveSessions(): void {
+    try {
+      safeLocalStorage.setItem('synexa_code_sessions', JSON.stringify(this.sessions))
+    } catch (error) {
+      console.error('Failed to save code sessions:', error)
+    }
+  }
+
+  createSession(prompt: string): CodeSession {
+    const session: CodeSession = {
+      id: `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+      title: this.generateTitleFromPrompt(prompt),
+      prompt,
+      spec: '',
+      generatedCode: '',
+      preview: {
+        type: 'web',
+        screens: [],
+        assets: []
+      },
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
+    }
+
+    this.sessions.unshift(session)
+    this.currentSession = session
+    this.saveSessions()
+
+    return session
+  }
+
+  async generateSpec(prompt: string): Promise<CodeSpec> {
+    // Simulate AI spec generation
+    await new Promise(resolve => setTimeout(resolve, 2000))
+
+    // Mock spec based on prompt
+    const spec: CodeSpec = {
+      title: this.generateTitleFromPrompt(prompt),
+      description: `A modern application based on: ${prompt}`,
+      features: [
+        'Responsive design',
+        'Modern UI components',
+        'Interactive elements',
+        'Mobile-friendly layout'
+      ],
+      techStack: ['React', 'TypeScript', 'Tailwind CSS', 'Next.js'],
+      pages: [
+        {
+          name: 'Home',
+          description: 'Main landing page',
+          components: ['Header', 'Hero', 'Features', 'Footer']
+        },
+        {
+          name: 'Dashboard',
+          description: 'User dashboard',
+          components: ['Sidebar', 'Stats', 'Charts', 'Actions']
+        }
+      ],
+      styling: {
+        framework: 'tailwind',
+        theme: 'auto',
+        colors: ['#3B82F6', '#10B981', '#F59E0B', '#EF4444']
+      }
+    }
+
+    return spec
+  }
+
+  async generateCode(session: CodeSession, spec: CodeSpec): Promise<CodeSession> {
+    // Simulate code generation
+    await new Promise(resolve => setTimeout(resolve, 3000))
+
+    const updatedSession: CodeSession = {
+      ...session,
+      spec: JSON.stringify(spec),
+      generatedCode: this.generateMockCode(spec),
+      preview: {
+        type: 'web',
+        screens: [
+          {
+            id: 'home',
+            name: 'Home Page',
+            type: 'page',
+            code: this.generateMockPageCode('Home', spec),
+            preview: this.generateMockPreview('home'),
+            dependencies: ['react', 'tailwindcss']
+          },
+          {
+            id: 'dashboard',
+            name: 'Dashboard',
+            type: 'page', 
+            code: this.generateMockPageCode('Dashboard', spec),
+            preview: this.generateMockPreview('dashboard'),
+            dependencies: ['react', 'tailwindcss', 'recharts']
+          }
+        ],
+        assets: []
+      },
+      updatedAt: new Date().toISOString()
+    }
+
+    // Update session in array
+    this.sessions = this.sessions.map(s => 
+      s.id === session.id ? updatedSession : s
+    )
+    this.currentSession = updatedSession
+    this.saveSessions()
+
+    return updatedSession
+  }
+
+  private generateTitleFromPrompt(prompt: string): string {
+    // Extract key words and create a title
+    const words = prompt.toLowerCase().split(' ')
+    const keyWords = words.filter(word => 
+      word.length > 3 && 
+      !['the', 'and', 'for', 'with', 'that', 'this', 'will', 'can', 'should'].includes(word)
+    )
+    
+    const title = keyWords.slice(0, 3).map(word => 
+      word.charAt(0).toUpperCase() + word.slice(1)
+    ).join(' ')
+    
+    return title || 'New Project'
+  }
+
+  private generateMockCode(spec: CodeSpec): string {
+    return `// ${spec.title}
+// Generated by Synexa AI
+
+import React from 'react'
+import { NextPage } from 'next'
+
+const App: NextPage = () => {
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <header className="bg-white shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center py-6">
+            <h1 className="text-3xl font-bold text-gray-900">
+              ${spec.title}
+            </h1>
+          </div>
+        </div>
+      </header>
+      
+      <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        <div className="px-4 py-6 sm:px-0">
+          <div className="border-4 border-dashed border-gray-200 rounded-lg h-96 flex items-center justify-center">
+            <p className="text-gray-500">${spec.description}</p>
+          </div>
+        </div>
+      </main>
+    </div>
+  )
+}
+
+export default App`
+  }
+
+  private generateMockPageCode(pageName: string, spec: CodeSpec): string {
+    return `// ${pageName} Page
+import React from 'react'
+
+const ${pageName}Page = () => {
+  return (
+    <div className="p-6">
+      <h1 className="text-2xl font-bold mb-4">${pageName}</h1>
+      <p className="text-gray-600">${spec.description}</p>
+    </div>
+  )
+}
+
+export default ${pageName}Page`
+  }
+
+  private generateMockPreview(screenType: string): string {
+    // Return mock HTML preview
+    return `<div class="p-4 bg-white rounded-lg shadow">
+      <h2 class="text-xl font-bold mb-2">${screenType.charAt(0).toUpperCase() + screenType.slice(1)}</h2>
+      <p class="text-gray-600">Preview of ${screenType} screen</p>
+    </div>`
+  }
+
+  getCurrentSession(): CodeSession | null {
+    return this.currentSession
+  }
+
+  getSession(id: string): CodeSession | null {
+    return this.sessions.find(s => s.id === id) || null
+  }
+
+  getAllSessions(): CodeSession[] {
+    return [...this.sessions]
+  }
+
+  deleteSession(id: string): void {
+    this.sessions = this.sessions.filter(s => s.id !== id)
+    if (this.currentSession?.id === id) {
+      this.currentSession = null
+    }
+    this.saveSessions()
+  }
+
+  setCurrentSession(session: CodeSession | null): void {
+    this.currentSession = session
+  }
+}
+
+export const codeSessionManager = new CodeSessionManager()

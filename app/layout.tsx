@@ -7,6 +7,7 @@ import { AppProvider } from '@/lib/context/AppContext'
 import { HelpProvider } from '@/components/providers/HelpProvider'
 import { SmartReminderTrigger } from '@/components/notifications/SmartReminderTrigger'
 import ChangelogUpdateTrigger from '@/components/changelog/ChangelogUpdateTrigger'
+import { BottomTabBar } from '@/components/ui/bottom-tab-bar'
 // import ErrorBoundary from '@/components/ErrorBoundary'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -20,6 +21,8 @@ export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   maximumScale: 1,
+  userScalable: false,
+  viewportFit: 'cover', // For iPhone notch/safe area
 }
 
 export default function RootLayout({
@@ -36,7 +39,16 @@ export default function RootLayout({
               <HelpProvider>
                 <SmartReminderTrigger userId="user_1" />
                 <ChangelogUpdateTrigger userId="user_1" />
-                {children}
+                
+                {/* Main content with bottom padding for mobile navigation */}
+                <div className="min-h-full pb-20 md:pb-0">
+                  {children}
+                </div>
+                
+                {/* Mobile bottom navigation - hidden on desktop */}
+                <div className="md:hidden">
+                  <BottomTabBar />
+                </div>
               </HelpProvider>
             </ToastProvider>
           </AppProvider>

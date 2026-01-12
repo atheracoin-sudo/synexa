@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { X, MessageCircle, Code2, Palette, Video, Sparkles, Zap, Crown, Bot } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
@@ -42,6 +43,16 @@ const studios = [
     route: '/design',
   },
   {
+    id: 'video',
+    title: 'Video',
+    subtitle: 'Create',
+    description: 'AI-powered videos',
+    icon: Video,
+    gradient: 'bg-gradient-to-br from-purple-500 via-pink-500 to-red-500',
+    available: true,
+    route: '/video',
+  },
+  {
     id: 'agents',
     title: 'Agents',
     subtitle: 'Automate',
@@ -51,19 +62,10 @@ const studios = [
     available: true,
     route: '/agents',
   },
-  {
-    id: 'video',
-    title: 'Video Studio',
-    subtitle: 'Coming Soon',
-    description: 'Video creation and editing',
-    icon: Video,
-    gradient: 'bg-gradient-to-br from-purple-500 via-indigo-500 to-blue-500',
-    available: false,
-    route: null,
-  },
 ]
 
 export function CreateStudioModal({ isOpen, onClose, onSelect }: CreateStudioModalProps) {
+  const router = useRouter()
   const [selectedStudio, setSelectedStudio] = useState<string | null>(null)
 
   if (!isOpen) return null
@@ -73,6 +75,14 @@ export function CreateStudioModal({ isOpen, onClose, onSelect }: CreateStudioMod
     
     setSelectedStudio(studio.id)
     onSelect(studio.id)
+    
+    // Navigate to the studio route
+    router.push(studio.route)
+    
+    // Close modal after navigation
+    setTimeout(() => {
+      onClose()
+    }, 100)
     
     // Navigate to the studio
     if (studio.route) {
