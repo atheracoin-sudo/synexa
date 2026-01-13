@@ -135,8 +135,10 @@ function ChatView() {
       })
   }, [isDev])
 
-  // Load messages from localStorage on mount
+  // Load messages from localStorage on mount (client-side only)
   useEffect(() => {
+    if (!mounted) return // Wait for client-side mount
+    
     const savedMessages = localStorage.getItem('synexa-chat-messages')
     if (savedMessages) {
       try {
@@ -149,14 +151,14 @@ function ChatView() {
         console.error('Failed to load saved messages:', error)
       }
     }
-  }, [])
+  }, [mounted])
 
-  // Save messages to localStorage
+  // Save messages to localStorage (client-side only)
   useEffect(() => {
-    if (messages.length > 0) {
-      localStorage.setItem('synexa-chat-messages', JSON.stringify(messages))
-    }
-  }, [messages])
+    if (!mounted || messages.length === 0) return
+    
+    localStorage.setItem('synexa-chat-messages', JSON.stringify(messages))
+  }, [messages, mounted])
 
   // Monitor scroll position
   useEffect(() => {
@@ -176,7 +178,9 @@ function ChatView() {
     const handleNewChat = () => {
       setMessages([])
       setError(null)
-      localStorage.removeItem('synexa-chat-messages')
+      if (typeof window !== 'undefined') {
+        localStorage.removeItem('synexa-chat-messages')
+      }
       toast({
         type: 'success',
         title: 'Yeni sohbet başlatıldı',
@@ -581,7 +585,9 @@ function ChatView() {
       timestamp: Date.now(),
     }
     
-    localStorage.setItem('synexa_code_studio_context', JSON.stringify(codeStudioContext))
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('synexa_code_studio_context', JSON.stringify(codeStudioContext))
+    }
     
     // Navigate to Code Studio
     window.open('/code', '_blank')

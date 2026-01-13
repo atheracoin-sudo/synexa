@@ -116,7 +116,7 @@ export default function CodeStudioPage() {
     const modeParam = urlParams.get('mode')
     
     if (fromChat) {
-      const context = localStorage.getItem('code_studio_context')
+      const context = typeof window !== 'undefined' ? localStorage.getItem('code_studio_context') : null
       if (context) {
         try {
           const { userMessage } = JSON.parse(context)
