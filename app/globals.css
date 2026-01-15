@@ -43,16 +43,16 @@
   .dark {
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
-    --card: 224 71% 8%;
+    --card: 220 13% 11%;
     --card-foreground: 210 40% 98%;
-    --popover: 224 71% 8%;
+    --popover: 220 13% 11%;
     --popover-foreground: 210 40% 98%;
     --primary: 217.2 91.2% 59.8%;
-    --primary-foreground: 222.2 84% 4.9%;
+    --primary-foreground: 0 0% 100%;
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 220 13% 15%;
+    --muted-foreground: 215 20.2% 70%;
     --accent: 217.2 32.6% 17.5%;
     --accent-foreground: 210 40% 98%;
     --destructive: 0 62.8% 30.6%;
@@ -60,6 +60,18 @@
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 224.3 76.3% 94.1%;
+    
+    /* Chat-specific colors for better contrast */
+    --chat-user-bg: 217.2 91.2% 59.8%;
+    --chat-user-text: 0 0% 100%;
+    --chat-assistant-bg: 220 13% 15%;
+    --chat-assistant-text: 210 40% 95%;
+    --chat-timestamp: 215 20.2% 65%;
+    --chat-border: 220 13% 20%;
+    
+    /* Dark theme gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(217.2 91.2% 59.8%) 0%, hsl(217.2 91.2% 65%) 100%);
+    --gradient-card: linear-gradient(135deg, hsl(220 13% 11%) 0%, hsl(220 13% 13%) 100%);
   }
 }
 
@@ -227,28 +239,68 @@
 }
 
 /* Prose (markdown) styling */
+.prose {
+  @apply text-[15px] leading-relaxed;
+}
+
+.prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
+  @apply text-foreground font-semibold mt-6 mb-3 first:mt-0;
+}
+
+.prose h1 {
+  @apply text-xl;
+}
+
+.prose h2 {
+  @apply text-lg;
+}
+
+.prose h3 {
+  @apply text-base;
+}
+
+.prose p {
+  @apply text-foreground mb-4 last:mb-0;
+}
+
+.prose ul, .prose ol {
+  @apply text-foreground mb-4 pl-6;
+}
+
+.prose li {
+  @apply mb-1;
+}
+
+.prose strong {
+  @apply font-semibold text-foreground;
+}
+
+.prose em {
+  @apply italic text-foreground;
+}
+
 .prose pre {
-  @apply bg-secondary/50 rounded-lg p-4 overflow-x-auto;
+  @apply bg-muted/80 rounded-lg p-4 overflow-x-auto mb-4 border border-border/50;
 }
 
 .prose code {
-  @apply bg-secondary px-1.5 py-0.5 rounded text-sm font-mono;
+  @apply bg-muted/60 px-1.5 py-0.5 rounded text-sm font-mono text-foreground;
 }
 
 .prose pre code {
-  @apply bg-transparent p-0;
+  @apply bg-transparent p-0 text-sm;
 }
 
 .prose a {
-  @apply text-primary hover:underline;
+  @apply text-primary hover:underline decoration-primary/50 underline-offset-2;
 }
 
 .prose blockquote {
-  @apply border-l-4 border-primary/30 pl-4 italic text-muted-foreground;
+  @apply border-l-4 border-primary/30 pl-4 italic text-muted-foreground mb-4;
 }
 
 .prose table {
-  @apply w-full border-collapse;
+  @apply w-full border-collapse mb-4;
 }
 
 .prose th,
@@ -257,7 +309,11 @@
 }
 
 .prose th {
-  @apply bg-secondary font-medium;
+  @apply bg-muted font-medium text-foreground;
+}
+
+.prose td {
+  @apply text-foreground;
 }
 
 /* Line clamp utility */
@@ -332,6 +388,97 @@
 /* Selection color */
 ::selection {
   @apply bg-primary/20 text-foreground;
+}
+
+/* Chat-specific utilities */
+.chat-message-user {
+  background: hsl(var(--chat-user-bg));
+  color: hsl(var(--chat-user-text));
+}
+
+.chat-message-assistant {
+  background: hsl(var(--chat-assistant-bg));
+  color: hsl(var(--chat-assistant-text));
+  border: 1px solid hsl(var(--chat-border));
+}
+
+.chat-timestamp {
+  color: hsl(var(--chat-timestamp));
+}
+
+/* Improved focus styles for chat */
+.chat-button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px hsl(var(--primary)), 0 0 0 4px hsl(var(--primary) / 0.2);
+}
+
+/* Message animation */
+.message-animate-in {
+  animation: messageSlideIn 0.3s ease-out;
+}
+
+@keyframes messageSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Sheet animations */
+@keyframes slideInFromRight {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInFromLeft {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInFromTop {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInFromBottom {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.slide-in-from-right-full {
+  animation: slideInFromRight 0.3s ease-out;
+}
+
+.slide-in-from-left-full {
+  animation: slideInFromLeft 0.3s ease-out;
+}
+
+.slide-in-from-top-full {
+  animation: slideInFromTop 0.3s ease-out;
+}
+
+.slide-in-from-bottom-full {
+  animation: slideInFromBottom 0.3s ease-out;
 }
 
 /* Monaco editor container fixes */

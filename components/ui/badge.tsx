@@ -36,3 +36,6 @@ const Badge = ({ className, variant = 'default', ...props }: BadgeProps) => {
 
 export { Badge, badgeVariants }
 
+
+
+

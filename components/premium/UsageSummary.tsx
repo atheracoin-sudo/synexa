@@ -158,7 +158,7 @@ export function UsageSummary({ className }: UsageSummaryProps) {
       <UpgradeModal
         isOpen={showUpgradeModal}
         onClose={() => setShowUpgradeModal(false)}
-        trigger="usage-limit"
+        feature="usage-limit"
       />
     </>
   )

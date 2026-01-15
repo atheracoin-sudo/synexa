@@ -1,9 +1,18 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { X, Bell, MessageCircle, Code2, Image, Settings, Activity, Clock, Users, Sparkles, Award, AlertTriangle, Trash2 } from 'lucide-react'
+import { Bell, MessageCircle, Code2, Image, Settings, Activity, Clock, Users, Sparkles, Award, AlertTriangle, Trash2 } from 'lucide-react'
 import { notificationManager, Notification, NotificationType } from '@/lib/notifications'
 import { NotificationEmptyState, NotificationLoadingState } from './NotificationEmptyStates'
+import { 
+  Sheet, 
+  SheetContent, 
+  SheetHeader, 
+  SheetBody, 
+  SheetFooter, 
+  SheetTitle, 
+  SheetClose 
+} from '@/components/ui/sheet'
 
 interface NotificationPanelProps {
   isOpen: boolean
@@ -67,7 +76,7 @@ export function NotificationPanel({ isOpen, onClose, userId }: NotificationPanel
 
   const getIcon = (notification: Notification) => {
     const iconName = notificationManager.getNotificationIcon(notification)
-    const iconProps = { size: 20, className: "text-gray-400" }
+    const iconProps = { size: 20, className: "text-muted-foreground" }
     
     switch (iconName) {
       case 'MessageCircle': return <MessageCircle {...iconProps} />
@@ -86,12 +95,12 @@ export function NotificationPanel({ isOpen, onClose, userId }: NotificationPanel
 
   const getTypeColor = (type: NotificationType) => {
     switch (type) {
-      case 'system': return 'text-blue-400'
-      case 'activity': return 'text-green-400'
-      case 'reminder': return 'text-yellow-400'
-      case 'growth': return 'text-purple-400'
-      case 'updates': return 'text-cyan-400'
-      default: return 'text-gray-400'
+      case 'system': return 'text-blue-500'
+      case 'activity': return 'text-green-500'
+      case 'reminder': return 'text-yellow-500'
+      case 'growth': return 'text-purple-500'
+      case 'updates': return 'text-cyan-500'
+      default: return 'text-muted-foreground'
     }
   }
 
@@ -101,45 +110,31 @@ export function NotificationPanel({ isOpen, onClose, userId }: NotificationPanel
 
   const unreadCount = notifications.filter(n => !n.isRead).length
 
-  if (!isOpen) return null
-
   return (
-    <>
-      {/* Backdrop */}
-      <div 
-        className="fixed inset-0 bg-black/20 z-40"
-        onClick={onClose}
-      />
-      
-      {/* Panel */}
-      <div className="fixed top-16 right-4 w-96 max-w-[calc(100vw-2rem)] bg-gray-900 border border-gray-800 rounded-2xl shadow-2xl z-50 max-h-[80vh] flex flex-col">
+    <Sheet open={isOpen} onOpenChange={onClose}>
+      <SheetContent side="right" size="md" className="bg-card border-border shadow-2xl">
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-gray-800">
+        <SheetHeader className="border-b border-border">
           <div className="flex items-center gap-3">
-            <Bell size={20} className="text-gray-400" />
-            <h3 className="text-lg font-semibold text-white">Bildirimler</h3>
+            <Bell size={20} className="text-muted-foreground" />
+            <SheetTitle>Bildirimler</SheetTitle>
             {unreadCount > 0 && (
-              <span className="bg-blue-500 text-white text-xs px-2 py-1 rounded-full">
+              <span className="bg-primary text-primary-foreground text-xs px-2 py-1 rounded-full font-medium">
                 {unreadCount}
               </span>
             )}
           </div>
-          <button
-            onClick={onClose}
-            className="p-1 hover:bg-gray-800 rounded-lg transition-colors"
-          >
-            <X size={20} className="text-gray-400" />
-          </button>
-        </div>
+          <SheetClose onClick={onClose} />
+        </SheetHeader>
 
         {/* Tabs */}
-        <div className="flex border-b border-gray-800">
+        <div className="flex border-b border-border px-4">
           <button
             onClick={() => setActiveTab('all')}
             className={`flex-1 px-4 py-3 text-sm font-medium transition-colors ${
               activeTab === 'all'
-                ? 'text-white border-b-2 border-blue-500'
-                : 'text-gray-400 hover:text-gray-300'
+                ? 'text-foreground border-b-2 border-primary'
+                : 'text-muted-foreground hover:text-foreground'
             }`}
           >
             Tümü ({notifications.length})
@@ -148,8 +143,8 @@ export function NotificationPanel({ isOpen, onClose, userId }: NotificationPanel
             onClick={() => setActiveTab('unread')}
             className={`flex-1 px-4 py-3 text-sm font-medium transition-colors ${
               activeTab === 'unread'
-                ? 'text-white border-b-2 border-blue-500'
-                : 'text-gray-400 hover:text-gray-300'
+                ? 'text-foreground border-b-2 border-primary'
+                : 'text-muted-foreground hover:text-foreground'
             }`}
           >
             Okunmamış ({unreadCount})
@@ -158,18 +153,18 @@ export function NotificationPanel({ isOpen, onClose, userId }: NotificationPanel
 
         {/* Actions */}
         {notifications.length > 0 && (
-          <div className="flex items-center justify-between p-3 border-b border-gray-800">
+          <div className="flex items-center justify-between p-3 border-b border-border">
             {unreadCount > 0 && (
               <button
                 onClick={handleMarkAllAsRead}
-                className="text-sm text-blue-400 hover:text-blue-300 transition-colors"
+                className="text-sm text-primary hover:text-primary/80 transition-colors font-medium"
               >
                 Tümünü okundu işaretle
               </button>
             )}
             <button
               onClick={handleClearAll}
-              className="text-sm text-red-400 hover:text-red-300 transition-colors flex items-center gap-1"
+              className="text-sm text-destructive hover:text-destructive/80 transition-colors flex items-center gap-1.5 font-medium"
             >
               <Trash2 size={14} />
               Tümünü temizle
@@ -178,7 +173,7 @@ export function NotificationPanel({ isOpen, onClose, userId }: NotificationPanel
         )}
 
         {/* Notifications List */}
-        <div className="flex-1 overflow-y-auto">
+        <SheetBody className="p-0">
           {loading ? (
             <NotificationLoadingState />
           ) : filteredNotifications.length === 0 ? (
@@ -186,13 +181,13 @@ export function NotificationPanel({ isOpen, onClose, userId }: NotificationPanel
               type={activeTab === 'unread' ? 'no_unread' : 'no_notifications'}
             />
           ) : (
-            <div className="divide-y divide-gray-800">
+            <div className="divide-y divide-border">
               {filteredNotifications.map((notification) => (
                 <div
                   key={notification.id}
                   onClick={() => handleNotificationClick(notification)}
-                  className={`p-4 hover:bg-gray-800/50 cursor-pointer transition-colors group ${
-                    !notification.isRead ? 'bg-gray-800/30' : ''
+                  className={`p-4 hover:bg-muted/50 cursor-pointer transition-colors group ${
+                    !notification.isRead ? 'bg-muted/30' : ''
                   }`}
                 >
                   <div className="flex items-start gap-3">
@@ -203,41 +198,41 @@ export function NotificationPanel({ isOpen, onClose, userId }: NotificationPanel
                     <div className="flex-1 min-w-0">
                       <div className="flex items-start justify-between gap-2">
                         <h4 className={`text-sm font-medium ${
-                          !notification.isRead ? 'text-white' : 'text-gray-300'
+                          !notification.isRead ? 'text-foreground' : 'text-muted-foreground'
                         }`}>
                           {notification.title}
                         </h4>
                         
                         <div className="flex items-center gap-2 flex-shrink-0">
-                          <span className="text-xs text-gray-500">
+                          <span className="text-xs text-muted-foreground">
                             {notificationManager.formatTimestamp(notification.timestamp)}
                           </span>
                           <button
                             onClick={(e) => handleDeleteNotification(notification.id, e)}
-                            className="opacity-0 group-hover:opacity-100 p-1 hover:bg-gray-700 rounded transition-all"
+                            className="opacity-0 group-hover:opacity-100 p-1 hover:bg-muted rounded-lg transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
                           >
-                            <X size={14} className="text-gray-400" />
+                            <Trash2 size={14} className="text-muted-foreground" />
                           </button>
                         </div>
                       </div>
                       
-                      <p className={`text-sm mt-1 ${
-                        !notification.isRead ? 'text-gray-300' : 'text-gray-400'
+                      <p className={`text-sm mt-1 leading-relaxed ${
+                        !notification.isRead ? 'text-foreground' : 'text-muted-foreground'
                       }`}>
                         {notification.message}
                       </p>
                       
                       {notification.actionText && (
                         <div className="mt-2">
-                          <span className="text-xs text-blue-400 font-medium">
+                          <span className="text-xs text-primary font-medium">
                             {notification.actionText} →
                           </span>
                         </div>
                       )}
                       
                       {/* Type indicator */}
-                      <div className="flex items-center gap-2 mt-2">
-                        <span className={`text-xs px-2 py-1 rounded-full bg-gray-800 ${getTypeColor(notification.type)}`}>
+                      <div className="flex items-center gap-2 mt-3">
+                        <span className={`text-xs px-2 py-1 rounded-full bg-muted ${getTypeColor(notification.type)}`}>
                           {notification.type === 'system' && 'Sistem'}
                           {notification.type === 'activity' && 'Aktivite'}
                           {notification.type === 'reminder' && 'Hatırlatma'}
@@ -246,7 +241,7 @@ export function NotificationPanel({ isOpen, onClose, userId }: NotificationPanel
                         </span>
                         
                         {!notification.isRead && (
-                          <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                          <div className="w-2 h-2 bg-primary rounded-full"></div>
                         )}
                       </div>
                     </div>
@@ -255,20 +250,20 @@ export function NotificationPanel({ isOpen, onClose, userId }: NotificationPanel
               ))}
             </div>
           )}
-        </div>
+        </SheetBody>
 
         {/* Footer */}
         {notifications.length > 0 && (
-          <div className="p-3 border-t border-gray-800">
+          <SheetFooter className="border-t border-border">
             <button
-              onClick={() => window.location.href = '/profile'}
-              className="w-full text-sm text-gray-400 hover:text-gray-300 transition-colors"
+              onClick={() => window.location.href = '/notifications'}
+              className="w-full text-sm text-muted-foreground hover:text-foreground transition-colors font-medium"
             >
-              Bildirim ayarları →
+              Tüm bildirimleri görüntüle →
             </button>
-          </div>
+          </SheetFooter>
         )}
-      </div>
-    </>
+      </SheetContent>
+    </Sheet>
   )
 }

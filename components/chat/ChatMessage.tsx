@@ -111,15 +111,17 @@ export function ChatMessage({
 
   return (
     <div className={cn(
-      'flex gap-4 p-4 rounded-2xl',
-      isUser ? 'bg-primary/10 ml-8' : 'bg-card mr-8'
+      'flex gap-4 p-5 rounded-2xl border shadow-sm',
+      isUser 
+        ? 'bg-primary text-white border-primary/20 ml-8' 
+        : 'bg-card text-card-foreground border-border/50 mr-8 dark:bg-[hsl(var(--chat-assistant-bg))] dark:text-[hsl(var(--chat-assistant-text))]'
     )}>
       {/* Avatar */}
       <div className={cn(
-        'w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0',
+        'w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm',
         isUser 
-          ? 'bg-primary text-primary-foreground' 
-          : 'bg-gradient-primary text-white'
+          ? 'bg-white/20 text-white' 
+          : 'bg-gradient-to-br from-slate-600 to-slate-700 dark:from-slate-700 dark:to-slate-800 text-white'
       )}>
         {isUser ? (
           <span className="text-sm font-medium">U</span>
@@ -131,15 +133,23 @@ export function ChatMessage({
       {/* Content */}
       <div className="flex-1 min-w-0">
         {/* Message Content */}
-        <div className="prose prose-sm dark:prose-invert max-w-none">
-          <p className="whitespace-pre-wrap text-foreground leading-relaxed">
+        <div className={cn(
+          "prose prose-sm max-w-none",
+          isUser 
+            ? "prose-invert" 
+            : "dark:prose-invert"
+        )}>
+          <div className="whitespace-pre-wrap text-[15px] leading-[1.6] text-current">
             {message.content}
-          </p>
+          </div>
         </div>
 
         {/* Metadata */}
         {message.metadata && (
-          <div className="flex items-center gap-4 mt-2 text-xs text-muted-foreground">
+          <div className={cn(
+            "flex items-center gap-4 mt-3 text-xs opacity-70",
+            isUser ? "text-white/80" : "text-[hsl(var(--chat-timestamp))]"
+          )}>
             <span>{new Date(message.timestamp).toLocaleTimeString()}</span>
             {message.metadata.model && (
               <span>Model: {message.metadata.model}</span>
@@ -157,18 +167,18 @@ export function ChatMessage({
             <div className="flex items-center gap-1">
               <button
                 onClick={handleCopy}
-                className="flex items-center gap-1 px-2 py-1 text-xs text-muted-foreground hover:text-foreground rounded-lg hover:bg-muted transition-colors"
+                className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-current/70 hover:text-current hover:bg-black/10 dark:hover:bg-white/10 rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-current/30"
               >
-                {copied ? <Check className="w-3 h-3" /> : <Copy className="w-3 h-3" />}
+                {copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
                 {copied ? 'Copied' : 'Copy'}
               </button>
 
               {onRegenerate && (
                 <button
                   onClick={onRegenerate}
-                  className="flex items-center gap-1 px-2 py-1 text-xs text-muted-foreground hover:text-foreground rounded-lg hover:bg-muted transition-colors"
+                  className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-current/70 hover:text-current hover:bg-black/10 dark:hover:bg-white/10 rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-current/30"
                 >
-                  <RefreshCw className="w-3 h-3" />
+                  <RefreshCw className="w-3.5 h-3.5" />
                   Regenerate
                 </button>
               )}
@@ -199,9 +209,9 @@ export function ChatMessage({
 
                 <button
                   onClick={handleCreateAgent}
-                  className="flex items-center gap-1 px-2 py-1 text-xs text-muted-foreground hover:text-foreground rounded-lg hover:bg-muted transition-colors"
+                  className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-current/70 hover:text-current hover:bg-black/10 dark:hover:bg-white/10 rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-current/30"
                 >
-                  <Bot className="w-3 h-3" />
+                  <Bot className="w-3.5 h-3.5" />
                   Make Agent
                 </button>
               </div>
@@ -212,25 +222,25 @@ export function ChatMessage({
               <button
                 onClick={() => handleFeedback('like')}
                 className={cn(
-                  'p-1 rounded-lg transition-colors',
+                  'p-2 rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-current/30',
                   feedback === 'like'
                     ? 'text-green-500 bg-green-500/20'
-                    : 'text-muted-foreground hover:text-foreground hover:bg-muted'
+                    : 'text-current/70 hover:text-current hover:bg-black/10 dark:hover:bg-white/10'
                 )}
               >
-                <ThumbsUp className="w-3 h-3" />
+                <ThumbsUp className="w-3.5 h-3.5" />
               </button>
 
               <button
                 onClick={() => handleFeedback('dislike')}
                 className={cn(
-                  'p-1 rounded-lg transition-colors',
+                  'p-2 rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-current/30',
                   feedback === 'dislike'
                     ? 'text-red-500 bg-red-500/20'
-                    : 'text-muted-foreground hover:text-foreground hover:bg-muted'
+                    : 'text-current/70 hover:text-current hover:bg-black/10 dark:hover:bg-white/10'
                 )}
               >
-                <ThumbsDown className="w-3 h-3" />
+                <ThumbsDown className="w-3.5 h-3.5" />
               </button>
             </div>
           </div>
@@ -295,6 +305,9 @@ export function ConversionSuggestion({
     </div>
   )
 }
+
+
+
 
 
 

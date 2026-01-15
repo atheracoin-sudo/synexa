@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, memo } from 'react'
 import { Message, OnboardingData } from '@/lib/types'
-import MessageBubble from './MessageBubble'
+import { MessageBubble } from './MessageBubble'
 import TypingIndicator from './TypingIndicator'
 import { scrollToBottom, isNearBottom } from '@/lib/utils'
 import { ChevronDown } from 'lucide-react'
@@ -67,16 +67,10 @@ function MessageList({
           ) : (
             <div className="flex-1">
               {messages.map((message, index) => (
-                <MessageBubble 
-                  key={message.id}
-                  message={message}
-                  isLast={index === messages.length - 1 && !isLoading}
-                  onCopy={onCopy}
-                  onRegenerate={onRegenerate}
-                  onThumbsUp={onThumbsUp}
-                  onThumbsDown={onThumbsDown}
-                  onConvertToApp={onConvertToApp}
-                />
+              <MessageBubble 
+                key={message.id}
+                message={message}
+              />
               ))}
               
               {isLoading && <TypingIndicator />}

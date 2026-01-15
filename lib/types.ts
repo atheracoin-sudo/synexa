@@ -3,7 +3,8 @@ export interface Message {
   id: string
   role: 'user' | 'assistant'
   content: string
-  createdAt: Date
+  timestamp: Date
+  isLoading?: boolean
   isError?: boolean // Flag for error messages that need special handling
 }
 

@@ -366,4 +366,3 @@ const server = app.listen(PORT as number, '0.0.0.0', async () => {
 // Initialize WebSocket service
 import { initWebSocketService } from './services/websocketService';
 initWebSocketService(server);
-

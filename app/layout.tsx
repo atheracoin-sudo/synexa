@@ -41,7 +41,7 @@ export default function RootLayout({
                 <ChangelogUpdateTrigger userId="user_1" />
                 
                 {/* Main content with bottom padding for mobile navigation */}
-                <div className="min-h-full pb-20 md:pb-0">
+                <div className="min-h-full pb-24 md:pb-0">
                   {children}
                 </div>
                 
