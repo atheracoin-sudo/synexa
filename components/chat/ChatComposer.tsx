@@ -8,8 +8,10 @@ import {
   DocumentTextIcon,
   CubeIcon,
   EyeIcon,
-  DevicePhoneMobileIcon
+  DevicePhoneMobileIcon,
+  RocketLaunchIcon
 } from '@heroicons/react/24/outline'
+import { BuildAppModal } from './BuildAppModal'
 
 interface ChatComposerProps {
   mode: ChatMode
@@ -55,6 +57,7 @@ const quickActions = [
 
 export function ChatComposer({ mode, value, onChange, onSend, onQuickAction, isLoading = false }: ChatComposerProps) {
   const [showQuickActions, setShowQuickActions] = useState(false)
+  const [showBuildAppModal, setShowBuildAppModal] = useState(false)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
   // Auto-resize textarea
@@ -132,6 +135,15 @@ export function ChatComposer({ mode, value, onChange, onSend, onQuickAction, isL
             </svg>
           </button>
 
+          {/* Build App Button */}
+          <button
+            onClick={() => setShowBuildAppModal(true)}
+            className="px-4 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl hover:from-blue-600 hover:to-purple-700 transition-all flex items-center gap-2 font-medium text-sm shadow-lg hover:shadow-xl flex-shrink-0"
+          >
+            <RocketLaunchIcon className="w-4 h-4" />
+            Build App
+          </button>
+
           {/* Text Input */}
           <div className="flex-1 relative">
             <textarea
@@ -175,6 +187,12 @@ export function ChatComposer({ mode, value, onChange, onSend, onQuickAction, isL
           {mode === 'review' && 'Mevcut çalışmaları gözden geçirme için'}
         </div>
       </div>
+
+      {/* Build App Modal */}
+      <BuildAppModal
+        isOpen={showBuildAppModal}
+        onClose={() => setShowBuildAppModal(false)}
+      />
     </div>
   )
 }

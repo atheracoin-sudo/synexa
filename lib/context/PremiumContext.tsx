@@ -99,10 +99,15 @@ export function PremiumProvider({ children }: PremiumProviderProps) {
       case 'download':
       case 'openInNewTab':
       case 'zipExport':
+      case 'exportProject':
         return isPremium
       case 'unlimitedProjects':
         return usage.apps.used < usage.apps.limit || usage.apps.limit === -1
       case 'advancedStudio':
+        return isPremium
+      case 'codeGeneration':
+        return isPremium
+      case 'livePreview':
         return isPremium
       default:
         return true

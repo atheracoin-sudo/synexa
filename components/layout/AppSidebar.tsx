@@ -15,13 +15,15 @@ import {
   Bars3Icon,
   XMarkIcon,
   CodeBracketIcon,
-  CreditCardIcon
+  CreditCardIcon,
+  CommandLineIcon
 } from '@heroicons/react/24/outline'
 
 const navigationItems = [
   { name: 'Projects', href: '/projects', icon: FolderIcon },
   { name: 'Chat', href: '/chat', icon: ChatBubbleLeftIcon },
   { name: 'Studio', href: '/studio', icon: CubeIcon },
+  { name: 'Build', href: '/build', icon: CommandLineIcon },
   { name: 'Code', href: '/code', icon: CodeBracketIcon },
   { name: 'Preview', href: '/preview', icon: EyeIcon },
   { name: 'Deploy Health', href: '/health', icon: HeartIcon },

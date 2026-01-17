@@ -86,6 +86,36 @@ const featureDetails = {
       'Priority processing'
     ]
   },
+  codeGeneration: {
+    title: 'AI Code Generation',
+    description: 'Generate complete applications with AI assistance in Build Workspace',
+    benefits: [
+      'Full app generation from prompts',
+      'Multiple frameworks support',
+      'Best practices implementation',
+      'Production-ready code structure'
+    ]
+  },
+  livePreview: {
+    title: 'Live Preview',
+    description: 'See your applications running in real-time as you build',
+    benefits: [
+      'Real-time application preview',
+      'Instant visual feedback',
+      'Debug faster with live updates',
+      'Better development workflow'
+    ]
+  },
+  exportProject: {
+    title: 'Project Export',
+    description: 'Export your Build workspace projects with all files and configurations',
+    benefits: [
+      'Complete project export as ZIP',
+      'All generated files included',
+      'Ready for deployment',
+      'Easy sharing with team'
+    ]
+  },
   default: {
     title: 'Premium Feature',
     description: 'This feature is available with Pro and Team plans',
